@@ -31,7 +31,7 @@ function App() {
           if (hoverColor) {
             setFilled(hoverColor);
           }
-          if (hoverAnimate) {
+          if (hoverScale) {
             setTransform("scale(1.2)");
           }
           if (hoverRotate) {
