@@ -6,6 +6,7 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import SvgCop from "./test";
 
+
 function App() {
   const [svgCode, setSvgCode] = useState("");
   const [componentCode, setComponentCode] = useState("");
@@ -19,10 +20,12 @@ function App() {
   function replaceFillAttribute(svgString) {
     const svgWithFill = svgString
       .replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}')
+      .replace(/width\s*=\s*"(.*?)"/g, 'width={size}')
+      .replace(/height\s*=\s*"(.*?)"/g, 'height={size}')
       .replace(/<path\s/g, '<path style={{transition: "transform 0.7s, fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} ')
       .replace(/clip-rule="/g, 'clipRule="')
       .replace(/fill-rule="/g, 'fillRule="');
-  
+    
     return svgWithFill.replace(
       /<svg\s/g,
       `<svg
@@ -68,9 +71,10 @@ function App() {
       import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
 
-      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, onClick }) => {
+      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, onClick, size =15 }) => {
         const [filled, setFilled] = useState("green");
         const [transform, setTransform] = useState("none");
+        const size = 15;
 
         return(
         ${replaceFillAttribute(svgCode)}
@@ -81,6 +85,7 @@ function App() {
         hoverScale: PropTypes.bool,
         hoverRotate: PropTypes.bool,
         onClick: PropTypes.func,
+        size: PropTypes.number
       };
 
 export default ${componentName};`;
@@ -92,7 +97,7 @@ export default ${componentName};`;
 
   return (
     <div style={{paddingTop:40, paddingLeft:40}}>
-      <SvgCop fill="green" hoverColor={"purple"} hoverScale={true} />
+      <SvgCop fill="green" hoverColor="purple" hoverRotate={true} size={40} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
       <textarea
