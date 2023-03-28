@@ -71,7 +71,7 @@ function App() {
       import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
 
-      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, onClick, size =15 }) => {
+      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, onClick, size = 20 }) => {
         const [filled, setFilled] = useState("green");
         const [transform, setTransform] = useState("none");
         const size = 15;
@@ -97,7 +97,7 @@ export default ${componentName};`;
 
   return (
     <div style={{paddingTop:40, paddingLeft:40}}>
-      <SvgCop fill="green" hoverColor="purple" hoverRotate={true} size={40} />
+      <SvgCop fill="green" hoverColor="purple" hoverScale={true} size={20} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
       <textarea

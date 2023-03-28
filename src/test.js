@@ -2,7 +2,7 @@
 import React,{ useState } from 'react';
 import PropTypes from 'prop-types';
 
-const SvgCop = ({ fill, hoverColor, hoverScale, hoverRotate, onClick, size =25 }) => {
+const SvgCop = ({ fill, hoverColor, hoverScale, hoverRotate, onClick, size =20 }) => {
   const [filled, setFilled] = useState("green");
   const [transform, setTransform] = useState("none");
 
