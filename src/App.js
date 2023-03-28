@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { parse } from 'svg-parser';
+// import { parse } from 'svg-parser';
 import './App.css'
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
@@ -13,6 +13,10 @@ function App() {
   const [error, setError] = useState('');
   const [componentName, setComponentName] = useState('SvgComponent');
 
+  function replaceFillAttribute(svgString) {
+    return svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
+  }
+
   const handleInputChange = (event) => {
     setSvgCode(event.target.value);
     setComponentCode('');
@@ -25,19 +29,11 @@ function App() {
 
   const transformSvg = () => {
     try {
-      // Validate the SVG code
-      const parsedSvg = parse(svgCode);
-      // if (parsedSvg.tagName !== 'svg') {
-      //   setError('Invalid SVG code');
-      //   return;
-      // }
-
-      // Transform the SVG code into a React component
       const componentCode = `import React from 'react';
 
-const ${componentName} = () => (
-  ${svgCode}
-);
+      const ${componentName} = ({ fill }) => (
+        ${replaceFillAttribute(svgCode)}
+      );
 
 export default ${componentName};`;
       setComponentCode(componentCode);
@@ -67,7 +63,7 @@ export default ${componentName};`;
   readOnly={true}
   setOptions={{ useWorker: false }}
   editorProps={{ $blockScrolling: true }}
-  style={{ width: '100%', height: '500px' }}
+  style={{ width: '100%', height: '200px' }}
 />
 
         </>
