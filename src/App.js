@@ -26,18 +26,18 @@ function App() {
     return svgWithFill.replace(
       /<svg\s/g,
       `<svg
-        style={{ transition: "1s", fill: fill, transform: transform }}
+        style={{ transition: "1s", fill: filled, transform: transform }}
         onMouseEnter={e => {
           if (hoverColor) {
-            setFill(hoverColor);
+            setFilled(hoverColor);
           }
           if (hoverAnimate) {
-            setTransform("scaleX(-1)");
+            setTransform("scale(1.2)");
           }
         }}
         onMouseLeave={e => {
-          setFill(fill);
-          setTransform("none");
+          setFilled(fill);
+          setTransform("scale(1)");
         }}
       `
     );
@@ -62,9 +62,13 @@ function App() {
       const componentCode = `import React from 'react';
       import PropTypes from 'prop-types';
 
-      const ${componentName} = ({ fill, hoverColor, hoverAnimate}) => (
+      const ${componentName} = ({ fill, hoverColor, hoverAnimate}) => {
+        const [filled, setFilled] = useState("green");
+        const [transform, setTransform] = useState("none");
+
+        return(
         ${replaceFillAttribute(svgCode)}
-      );
+      )};
       ${componentName}.propTypes = {
         fill: PropTypes.string.isRequired,
         hoverColor: PropTypes.string,
