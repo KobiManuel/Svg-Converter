@@ -84,7 +84,7 @@ export default ${componentName};`;
 
   return (
     <div style={{paddingTop:40, paddingLeft:40}}>
-      <SvgCop fill="green" hoverColor={"black"} hoverAnimate={true} />
+      <SvgCop fill="green" hoverColor={"black"} hoverScale={true} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
       <textarea

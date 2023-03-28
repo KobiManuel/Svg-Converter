@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import PropTypes from "prop-types";
 
-const SvgCop = ({ fill, hoverColor, hoverAnimate }) => {
+const SvgCop = ({ fill, hoverColor, hoverScale, hoverRotate }) => {
     const [filled, setFill] = useState("green");
     const [transform, setTransform] = useState("none");
  return (
@@ -11,17 +11,18 @@ const SvgCop = ({ fill, hoverColor, hoverAnimate }) => {
     if (hoverColor) {
       setFill(hoverColor);
     }
-    if (hoverAnimate) {
-      setTransform("rotate(360deg)");
+    if (hoverScale) {
+      setTransform("scale(1.2)");
     }
+    if (hoverRotate) setTransform("rotate(360deg)")
   }}
   onMouseLeave={e => {
     setFill(fill);
-    setTransform("none");
+    setTransform("scale(1)");
   }}
 
-    width="50"
-    height="49"
+    width="20"
+    height="19"
     viewBox="0 0 20 19"
     fill={fill}
     xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +47,8 @@ const SvgCop = ({ fill, hoverColor, hoverAnimate }) => {
 SvgCop.propTypes = {
   fill: PropTypes.string.isRequired,
   hoverColor: PropTypes.string,
-  hoverAnimate: PropTypes.bool,
+  hoverScale: PropTypes.bool,
+  hoverRotate: PropTypes.bool,
 };
 
 export default SvgCop;
