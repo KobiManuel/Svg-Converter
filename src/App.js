@@ -68,15 +68,12 @@ function App() {
       import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
 
-      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, Link, onClick }) => {
+      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, onClick }) => {
         const [filled, setFilled] = useState("green");
         const [transform, setTransform] = useState("none");
-        import { Link } from "react-router-dom";
 
         return(
-          <Link to={Link}>
         ${replaceFillAttribute(svgCode)}
-        </Link>
       )};
       ${componentName}.propTypes = {
         fill: PropTypes.string.isRequired,
@@ -84,7 +81,6 @@ function App() {
         hoverScale: PropTypes.bool,
         hoverRotate: PropTypes.bool,
         onClick: PropTypes.func,
-        Link: PropTypes.string
       };
 
 export default ${componentName};`;
