@@ -43,6 +43,7 @@ function App() {
           setTransform("scale(1)");
           setTransform("none");
         }}
+        onClick={onClick}
       `
     );
   }
@@ -63,21 +64,27 @@ function App() {
       if (svgCode.trim() === "") {
         throw new Error("SVG code cannot be empty");
       }
-      const componentCode = `import React,{ useState } from 'react';
+      const componentCode = `
+      import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
 
-      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate }) => {
+      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, Link, onClick }) => {
         const [filled, setFilled] = useState("green");
         const [transform, setTransform] = useState("none");
+        import { Link } from "react-router-dom";
 
         return(
+          <Link to={Link}>
         ${replaceFillAttribute(svgCode)}
+        </Link>
       )};
       ${componentName}.propTypes = {
         fill: PropTypes.string.isRequired,
         hoverColor: PropTypes.string,
         hoverScale: PropTypes.bool,
-        hoverRotate: PropTypes.bool
+        hoverRotate: PropTypes.bool,
+        onClick: PropTypes.func,
+        Link: PropTypes.string
       };
 
 export default ${componentName};`;
