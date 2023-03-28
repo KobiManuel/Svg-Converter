@@ -19,14 +19,14 @@ function App() {
   function replaceFillAttribute(svgString) {
     const svgWithFill = svgString
       .replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}')
-      .replace(/<path\s/g, '<path style={{transition: "0.7s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} ')
+      .replace(/<path\s/g, '<path style={{"transform 0.7s, fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} ')
       .replace(/clip-rule="/g, 'clipRule="')
       .replace(/fill-rule="/g, 'fillRule="');
   
     return svgWithFill.replace(
       /<svg\s/g,
       `<svg
-        style={{ transition: "0.7s", fill: filled, transform: transform }}
+        style={{ transition: "transform 0.7s, fill 0.4s ", fill: filled, transform: transform }}
         onMouseEnter={e => {
           if (hoverColor) {
             setFilled(hoverColor);
@@ -92,7 +92,7 @@ export default ${componentName};`;
 
   return (
     <div style={{paddingTop:40, paddingLeft:40}}>
-      <SvgCop fill="green" hoverColor={"purple"} hoverRotate={true} />
+      <SvgCop fill="green" hoverColor={"purple"} hoverScale={true} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
       <textarea
