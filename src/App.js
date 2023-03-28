@@ -6,7 +6,6 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import SvgCop from "./test";
 
-
 function App() {
   const [svgCode, setSvgCode] = useState("");
   const [componentCode, setComponentCode] = useState("");
@@ -19,13 +18,16 @@ function App() {
   // }
   function replaceFillAttribute(svgString) {
     const svgWithFill = svgString
-      .replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}')
-      .replace(/width\s*=\s*"(.*?)"/g, 'width={size}')
-      .replace(/height\s*=\s*"(.*?)"/g, 'height={size}')
-      .replace(/<path\s/g, '<path style={{transition: "transform 1s, fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} ')
+      .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
+      .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
+      .replace(/height\s*=\s*"(.*?)"/g, "height={size}")
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "transform 1s, fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
+      )
       .replace(/clip-rule="/g, 'clipRule="')
       .replace(/fill-rule="/g, 'fillRule="');
-    
+
     return svgWithFill.replace(
       /<svg\s/g,
       `<svg
@@ -50,7 +52,6 @@ function App() {
       `
     );
   }
-  
 
   const handleInputChange = (event) => {
     setSvgCode(event.target.value);
@@ -67,6 +68,14 @@ function App() {
       if (svgCode.trim() === "") {
         throw new Error("SVG code cannot be empty");
       }
+
+      if (
+        !svgCode.trim().startsWith("<svg>") ||
+        !svgCode.trim().endsWith("</svg>")
+      ) {
+        throw new Error("SVG code must start with <svg> and end with </svg>");
+      }
+
       const componentCode = `
       import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
@@ -96,7 +105,7 @@ export default ${componentName};`;
   };
 
   return (
-    <div style={{paddingTop:40, paddingLeft:40}}>
+    <div style={{ paddingTop: 40, paddingLeft: 40 }}>
       <SvgCop fill="green" hoverColor="purple" hoverScale={true} size={20} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
