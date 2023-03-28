@@ -19,7 +19,7 @@ function App() {
   function replaceFillAttribute(svgString) {
     const svgWithFill = svgString
       .replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}')
-      .replace(/<path\s/g, '<path style={{transition: "1s", fill: filled}} onMouseEnter={e => {if (hoverColor) setFill(hoverColor);}} onMouseLeave={e => {setFill(fill);}} ')
+      .replace(/<path\s/g, '<path style={{transition: "1s", fill: filled}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} ')
       .replace(/clip-rule="/g, 'clipRule="')
       .replace(/fill-rule="/g, 'fillRule="');
   
@@ -59,7 +59,7 @@ function App() {
       if (svgCode.trim() === "") {
         throw new Error("SVG code cannot be empty");
       }
-      const componentCode = `import React from 'react';
+      const componentCode = `import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
 
       const ${componentName} = ({ fill, hoverColor, hoverAnimate}) => {
