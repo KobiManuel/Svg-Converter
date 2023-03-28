@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { parse } from 'svg-parser';
+import './App.css'
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-javascript';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
+
 
 
 function App() {
@@ -22,10 +27,10 @@ function App() {
     try {
       // Validate the SVG code
       const parsedSvg = parse(svgCode);
-      if (parsedSvg.tagName !== 'svg') {
-        setError('Invalid SVG code');
-        return;
-      }
+      // if (parsedSvg.tagName !== 'svg') {
+      //   setError('Invalid SVG code');
+      //   return;
+      // }
 
       // Transform the SVG code into a React component
       const componentCode = `import React from 'react';
@@ -55,7 +60,16 @@ export default ${componentName};`;
       {componentCode && (
         <>
           <p>Preview:</p>
-          <pre><code>{componentCode}</code></pre>
+          <AceEditor
+  mode="javascript"
+  theme="tomorrow_night"
+  value={componentCode}
+  readOnly={true}
+  setOptions={{ useWorker: false }}
+  editorProps={{ $blockScrolling: true }}
+  style={{ width: '100%', height: '500px' }}
+/>
+
         </>
       )}
     </div>
