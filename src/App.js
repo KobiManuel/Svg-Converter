@@ -34,10 +34,14 @@ function App() {
           if (hoverAnimate) {
             setTransform("scale(1.2)");
           }
+          if (hoverRotate) {
+            setTransform("rotate(360deg)");
+          }
         }}
         onMouseLeave={e => {
           setFilled(fill);
           setTransform("scale(1)");
+          setTransform("none");
         }}
       `
     );
@@ -62,7 +66,7 @@ function App() {
       const componentCode = `import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
 
-      const ${componentName} = ({ fill, hoverColor, hoverAnimate}) => {
+      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate }) => {
         const [filled, setFilled] = useState("green");
         const [transform, setTransform] = useState("none");
 
@@ -72,7 +76,8 @@ function App() {
       ${componentName}.propTypes = {
         fill: PropTypes.string.isRequired,
         hoverColor: PropTypes.string,
-        hoverAnimate: PropTypes.bool
+        hoverScale: PropTypes.bool,
+        hoverRotate: PropTypes.bool
       };
 
 export default ${componentName};`;
@@ -84,7 +89,7 @@ export default ${componentName};`;
 
   return (
     <div style={{paddingTop:40, paddingLeft:40}}>
-      <SvgCop fill="green" hoverColor={"black"} hoverScale={true} />
+      <SvgCop fill="green" hoverColor={"black"} hoverRotate={true} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
       <textarea
