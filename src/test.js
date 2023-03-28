@@ -39,3 +39,4 @@ SvgCop.propTypes = {
 };
 
 export default SvgCop;
+

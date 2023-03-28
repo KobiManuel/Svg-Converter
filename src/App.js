@@ -19,7 +19,7 @@ function App() {
   function replaceFillAttribute(svgString) {
     const svgWithFill = svgString
       .replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}')
-      .replace(/<path\s/g, '<path style={{"transform 0.7s, fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} ')
+      .replace(/<path\s/g, '<path style={{transition: "transform 0.7s, fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} ')
       .replace(/clip-rule="/g, 'clipRule="')
       .replace(/fill-rule="/g, 'fillRule="');
   
