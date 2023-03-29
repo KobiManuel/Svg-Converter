@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import { parse } from 'svg-parser';
 import "./App.css";
 import AceEditor from "react-ace";
@@ -11,12 +11,23 @@ function App() {
   const [componentCode, setComponentCode] = useState("");
   const [error, setError] = useState("");
   const [componentName, setComponentName] = useState("SvgComponent");
+  const [useFill, setUseFill] = useState(true);
+  const [useSize, setUseSize] = useState(true);
+  const [useAnimate, setUseAnimate] = useState(true);
+
+  useEffect(() => {
+    transformSvg();
+  }, [useFill, useSize, useAnimate])
+  
+
+
 
   // function replaceFillAttribute(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
   //   return svgWithFill.replace(/<svg\s/g, '<svg onMouseEnter={e => { if (hoverColor) e.target.style.fill = hoverColor; if (hoverAnimate) e.target.style.transition = "transform 5s ease-in-out"; e.target.style.transform = "rotateX(180deg)"; onMouseLeave={e => { e.target.style.fill = fill; e.target.style.transition = "none"; e.target.style.transform = "none"; }} ');
   // }
   function replaceFillAttribute(svgString) {
+    if (useFill && useSize && useAnimate) {
     const svgWithFill = svgString
       .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
       .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
@@ -50,7 +61,100 @@ function App() {
         }}
         onClick={onClick}
       `
-    );
+    ) };
+    if (!useFill) {
+      const svgWithFill = svgString
+      .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
+      .replace(/height\s*=\s*"(.*?)"/g, "height={size}")
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "transform 1s", pointerEvents: "none"}}  '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        style={{ transition: "transform 1s", transform: transform }}
+        onMouseEnter={e => {
+          if (hoverScale) {
+            setTransform("scale(1.2)");
+          }
+          if (hoverRotate) {
+            setTransform("rotate(360deg)");
+          }
+        }}
+        onMouseLeave={e => {
+          setTransform("scale(1)");
+          setTransform("none");
+        }}
+        onClick={onClick}
+      `
+    )
+    };
+    if (!useAnimate) {
+      const svgWithFill = svgString
+      .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
+      .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
+      .replace(/height\s*=\s*"(.*?)"/g, "height={size}")
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        style={{ transition: "fill 0.4s", fill: filled }}
+        onMouseEnter={e => {
+          if (hoverColor) {
+            setFilled(hoverColor);
+          }
+        }}
+        onMouseLeave={e => {
+          setFilled(fill);
+        }}
+        onClick={onClick}
+      `
+    )
+    };
+    if (!useSize) {
+      const svgWithFill = svgString
+      .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "transform 1s, fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform }}
+        onMouseEnter={e => {
+          if (hoverColor) {
+            setFilled(hoverColor);
+          }
+          if (hoverScale) {
+            setTransform("scale(1.2)");
+          }
+          if (hoverRotate) {
+            setTransform("rotate(360deg)");
+          }
+        }}
+        onMouseLeave={e => {
+          setFilled(fill);
+          setTransform("scale(1)");
+          setTransform("none");
+        }}
+        onClick={onClick}
+      `
+    )
+    };
   }
 
   const handleInputChange = (event) => {
@@ -63,6 +167,22 @@ function App() {
     setComponentName(event.target.value);
   };
 
+  const Size = useSize ? "size = 20" : "" ;
+  const Animate = useAnimate ? "hoverScale, hoverRotate, " : "";
+  const Fill = useFill ? "fill, " : "";
+
+  const fillState = useFill ? "const [filled, setFilled] = useState('green')" : "";
+  const animateState = useAnimate ? " const [transform, setTransform] = useState('none');" : "";
+
+  
+
+  const fillPropType = useFill ? "fill: PropTypes.string.isRequired," : "";
+  const hoverColorPropType = useFill ? "hoverColor: PropTypes.string," : "";
+  const hoverScalePropType = useAnimate ? "hoverScale: PropTypes.bool," : "";
+  const hoverRotatePropType = useAnimate ? "hoverRotate: PropTypes.bool," : "";
+  const sizePropType = useSize ? "size: PropTypes.number" : "";
+
+
   const transformSvg = () => {
     try {
       if (svgCode.trim() === "") {
@@ -73,27 +193,27 @@ function App() {
         !svgCode.trim().startsWith("<svg") ||
         !svgCode.trim().endsWith("</svg>")
       ) {
-        throw new Error("SVG code must start with <svg> and end with </svg>");
+        throw new Error("Invalid svg format");
       }
 
       const componentCode = `
       import React,{ useState } from 'react';
       import PropTypes from 'prop-types';
 
-      const ${componentName} = ({ fill, hoverColor, hoverScale, hoverRotate, onClick, size = 20 }) => {
-        const [filled, setFilled] = useState("green");
-        const [transform, setTransform] = useState("none");
+      const ${componentName} = ({ ${Fill} ${Animate} onClick, ${Size} }) => {
+        ${fillState}
+        ${animateState}
 
         return(
         ${replaceFillAttribute(svgCode)}
       )};
       ${componentName}.propTypes = {
-        fill: PropTypes.string.isRequired,
-        hoverColor: PropTypes.string,
-        hoverScale: PropTypes.bool,
-        hoverRotate: PropTypes.bool,
+        ${fillPropType}
+        ${hoverColorPropType}
+        ${hoverScalePropType}
+        ${hoverRotatePropType}
         onClick: PropTypes.func,
-        size: PropTypes.number
+        ${sizePropType}
       };
 
 export default ${componentName};`;
@@ -105,6 +225,11 @@ export default ${componentName};`;
 
   return (
     <div style={{ paddingTop: 40, paddingLeft: 40 }}>
+      <div>
+        <button onClick={() => setUseFill(false)}>Color</button>
+        <button onClick={() => setUseAnimate(false)}>Animation</button>
+        <button onClick={() => setUseSize(false)}>Size</button>
+      </div>
       <SvgCop fill="green" hoverColor="purple" hoverRotate={true} size={40} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
