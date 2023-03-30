@@ -4,6 +4,7 @@ import "./App.css";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
+import Icon from "./test";
 import SvgCop from "./test";
 
 function App() {
@@ -61,8 +62,7 @@ function App() {
         }}
         onClick={onClick}
       `
-    ) };
-    if (!useFill) {
+    ) } else if (!useFill && useAnimate && useSize) {
       const svgWithFill = svgString
       .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
       .replace(/height\s*=\s*"(.*?)"/g, "height={size}")
@@ -92,8 +92,52 @@ function App() {
         onClick={onClick}
       `
     )
-    };
-    if (!useAnimate) {
+    } else if (!useFill && !useAnimate && useSize) {
+      const svgWithFill = svgString
+      .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
+      .replace(/height\s*=\s*"(.*?)"/g, "height={size}")
+      .replace(
+        /<path\s/g,
+        '<path style={{pointerEvents: "none"}}  '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        onClick={onClick}
+      `
+    )
+    } else if (!useFill && useAnimate && !useSize) {
+      const svgWithFill = svgString
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "transform 1s", pointerEvents: "none"}}  '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        style={{ transition: "transform 1s", transform: transform }}
+        onMouseEnter={e => {
+          if (hoverScale) {
+            setTransform("scale(1.2)");
+          }
+          if (hoverRotate) {
+            setTransform("rotate(360deg)");
+          }
+        }}
+        onMouseLeave={e => {
+          setTransform("scale(1)");
+          setTransform("none");
+        }}
+        onClick={onClick}
+      `
+    )
+    } else if (!useAnimate && useFill && useSize) {
       const svgWithFill = svgString
       .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
       .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
@@ -120,8 +164,49 @@ function App() {
         onClick={onClick}
       `
     )
-    };
-    if (!useSize) {
+    } else if (!useAnimate && !useFill && useSize) {
+      const svgWithFill = svgString
+      .replace(/width\s*=\s*"(.*?)"/g, "width={size}")
+      .replace(/height\s*=\s*"(.*?)"/g, "height={size}")
+      .replace(
+        /<path\s/g,
+        '<path style={{pointerEvents: "none"}} '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        onClick={onClick}
+      `
+    )
+    } else if (!useAnimate && useFill && !useSize) {
+      const svgWithFill = svgString
+      .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        style={{ transition: "fill 0.4s", fill: filled }}
+        onMouseEnter={e => {
+          if (hoverColor) {
+            setFilled(hoverColor);
+          }
+        }}
+        onMouseLeave={e => {
+          setFilled(fill);
+        }}
+        onClick={onClick}
+      `
+    )
+    } else if (!useSize && useFill && useAnimate) {
       const svgWithFill = svgString
       .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
       .replace(
@@ -154,6 +239,63 @@ function App() {
         onClick={onClick}
       `
     )
+    } else if (!useSize && !useFill && useAnimate) {
+      const svgWithFill = svgString
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "transform 1s", pointerEvents: "none"}} '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        style={{ transition: "transform 1s", transform: transform }}
+        onMouseEnter={e => {
+          if (hoverScale) {
+            setTransform("scale(1.2)");
+          }
+          if (hoverRotate) {
+            setTransform("rotate(360deg)");
+          }
+        }}
+        onMouseLeave={e => {
+          setTransform("scale(1)");
+          setTransform("none");
+        }}
+        onClick={onClick}
+      `
+    )
+    } else if (!useSize && useFill && !useAnimate) {
+      const svgWithFill = svgString
+      .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
+      .replace(
+        /<path\s/g,
+        '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
+      )
+      .replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+
+    return svgWithFill.replace(
+      /<svg\s/g,
+      `<svg
+        style={{ transition: "fill 0.4s", fill: filled }}
+        onMouseEnter={e => {
+          if (hoverColor) {
+            setFilled(hoverColor);
+          }
+        }}
+        onMouseLeave={e => {
+          setFilled(fill);
+        }}
+        onClick={onClick}
+      `
+    )
+    } else if (!useFill && !useSize && !useAnimate) {
+      const svgWithFill = svgString.replace(/clip-rule="/g, 'clipRule="')
+      .replace(/fill-rule="/g, 'fillRule="');
+      return svgWithFill;
     };
   }
 
@@ -169,9 +311,9 @@ function App() {
 
   const Size = useSize ? "size = 20" : "" ;
   const Animate = useAnimate ? "hoverScale, hoverRotate, " : "";
-  const Fill = useFill ? "fill, " : "";
+  const Fill = useFill ? "fill, hoverColor, " : "";
 
-  const fillState = useFill ? "const [filled, setFilled] = useState('green')" : "";
+  const fillState = useFill ? "const [filled, setFilled] = useState(' ')" : "";
   const animateState = useAnimate ? " const [transform, setTransform] = useState('none');" : "";
 
   
@@ -226,11 +368,11 @@ export default ${componentName};`;
   return (
     <div style={{ paddingTop: 40, paddingLeft: 40 }}>
       <div>
-        <button onClick={() => setUseFill(false)}>Color</button>
-        <button onClick={() => setUseAnimate(false)}>Animation</button>
-        <button onClick={() => setUseSize(false)}>Size</button>
+        <button onClick={() => setUseFill(!useFill)}>Color</button>
+        <button onClick={() => setUseAnimate(!useAnimate)}>Animation</button>
+        <button onClick={() => setUseSize(!useSize)}>Size</button>
       </div>
-      <SvgCop fill="green" hoverColor="purple" hoverRotate={true} size={40} />
+      <SvgCop size={40} fill="green"  hoverColor="grey" hoverRotate={true} />
       <h1>SVG to React Component</h1>
       <p>Paste your SVG code below:</p>
       <textarea
