@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./App.scss";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
@@ -20,7 +20,7 @@ function App() {
 
   // function replaceFillAttribute(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
-  //   return svgWithFill.replace(/<svg\s/g, '<svg onMouseEnter={e => { if (hoverColor) e.target.style.fill = hoverColor; if (hoverAnimate) e.target.style.transition = "transform 5s ease-in-out"; e.target.style.transform = "rotateX(180deg)"; onMouseLeave={e => { e.target.style.fill = fill; e.target.style.transition = "none"; e.target.style.transform = "none"; }} ');
+  //   return svgWithFill.replace(/<svg/g, '<svg onMouseEnter={e => { if (hoverColor) e.target.style.fill = hoverColor; if (hoverAnimate) e.target.style.transition = "transform 5s ease-in-out"; e.target.style.transform = "rotateX(180deg)"; onMouseLeave={e => { e.target.style.fill = fill; e.target.style.transition = "none"; e.target.style.transform = "none"; }} ');
   // }
   function replaceFillAttribute(svgString) {
     const hasWidthOrHeight =
@@ -62,9 +62,9 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
-          style={{ width: size, transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform }}
+          style={{ width: size, transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
           onMouseEnter={e => {
             if (hoverColor) {
               setFilled(hoverColor);
@@ -97,9 +97,9 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
-            style={{ width: size, transition: "transform 1s", transform: transform }}
+            style={{ width: size, transition: "transform 1s", transform: transform, cursor: "pointer" }}
             onMouseEnter={e => {
               if (hoverScale) {
                 setTransform("scale(1.2)");
@@ -150,7 +150,7 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
               style={{ width: size, transition: "fill 0.4s ", fill: filled }}
               onMouseEnter={e => {
@@ -170,7 +170,7 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
                 style={{ width: size }}
               `
@@ -212,9 +212,9 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
-                  style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform }}
+                  style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
                   onMouseEnter={e => {
                     if (hoverColor) {
                       setFilled(hoverColor);
@@ -249,9 +249,9 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
-        style={{ transition: "transform 1s", transform: transform }}
+        style={{ transition: "transform 1s", transform: transform, cursor: "pointer" }}
         onMouseEnter={e => {
           if (hoverScale) {
             setTransform("scale(1.2)");
@@ -275,7 +275,7 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
         onClick={onClick}
       `
@@ -293,9 +293,9 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
-        style={{ transition: "transform 1s", transform: transform }}
+        style={{ transition: "transform 1s", transform: transform, cursor: "pointer" }}
         onMouseEnter={e => {
           if (hoverScale) {
             setTransform("scale(1.2)");
@@ -348,7 +348,7 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
         style={{ transition: "fill 0.4s", fill: filled }}
         onMouseEnter={e => {
@@ -370,7 +370,7 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
         onClick={onClick}
       `
@@ -410,7 +410,7 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
         style={{ transition: "fill 0.4s", fill: filled }}
         onMouseEnter={e => {
@@ -459,9 +459,9 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
-        style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform }}
+        style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
         onMouseEnter={e => {
           if (hoverColor) {
             setFilled(hoverColor);
@@ -494,9 +494,9 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
-        style={{ transition: "transform 1s", transform: transform }}
+        style={{ transition: "transform 1s", transform: transform, cursor: "pointer" }}
         onMouseEnter={e => {
           if (hoverScale) {
             setTransform("scale(1.2)");
@@ -547,7 +547,7 @@ function App() {
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
-        /<svg\s/g,
+        /<svg/g,
         `<svg
         style={{ transition: "fill 0.4s", fill: filled }}
         onMouseEnter={e => {
@@ -636,33 +636,40 @@ export default ${componentName};`;
   };
 
   return (
-    <div style={{ paddingTop: 40, paddingLeft: 40 }}>
+    <div className="svgConverter">
+      <header>
+        <span>
+          <img src={""} alt="/" />
+          <p>
+            Svg + Jsx
+          </p>
+        </span>
+      </header>
+      <div className="container">
+        <div className="inner-container">
+          <div className="main">
       <div>
+        <p>Props:</p>
+        <span>
         <button onClick={() => setUseFill(!useFill)}>Color</button>
         <button onClick={() => setUseAnimate(!useAnimate)}>Animation</button>
         <button onClick={() => setUseSize(!useSize)}>Size</button>
+        </span>
       </div>
-      <SvgCop size={40} fill="green" hoverColor="purple" hoverRotate={true} />
-      <h1>SVG to React Component</h1>
-      <p>Paste your SVG code below:</p>
-      <textarea
+      {/* <SvgCop size={40} fill="green" hoverColor="purple" hoverScale={true} /> */}
+
+      <div className="row">
+         <div className="text-area">
+         <textarea
         rows="10"
         cols="50"
         value={svgCode}
         onChange={handleInputChange}
-      ></textarea>
-      <br />
-      <label htmlFor="componentName">Component Name:</label>
-      <input
-        type="text"
-        id="componentName"
-        value={componentName}
-        onChange={handleNameChange}
-      />
-      <br />
-      <button onClick={transformSvg}>Transform SVG</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {componentCode && (
+      > 
+      </textarea>
+         </div>
+        <div className="code-area">
+        {componentCode && (
         <>
           <p>Preview:</p>
           <AceEditor
@@ -676,6 +683,21 @@ export default ${componentName};`;
           />
         </>
       )}
+        </div>
+      </div>
+      <label htmlFor="componentName">Component Name:</label>
+      <input
+        type="text"
+        id="componentName"
+        value={componentName}
+        onChange={handleNameChange}
+      />
+      <br />
+      <button onClick={transformSvg}>Transform SVG</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      </div>
+      </div>
+      </div>
     </div>
   );
 }
