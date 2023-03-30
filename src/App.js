@@ -9,7 +9,7 @@ function App() {
   const [svgCode, setSvgCode] = useState("");
   const [componentCode, setComponentCode] = useState("");
   const [error, setError] = useState("");
-  const [componentName, setComponentName] = useState("SvgComponent");
+  const [componentName, setComponentName] = useState("SvgIcon");
   const [useFill, setUseFill] = useState(true);
   const [useSize, setUseSize] = useState(true);
   const [useAnimate, setUseAnimate] = useState(true);
