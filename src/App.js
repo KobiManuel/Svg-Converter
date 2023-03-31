@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./App.scss";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-tomorrow_night";
-import SvgCop from "./test";
+import "ace-builds/src-noconflict/theme-cobalt";
+import logo from "./images/logo2.png";
 
 function App() {
   const [svgCode, setSvgCode] = useState("");
@@ -639,7 +639,7 @@ export default ${componentName};`;
     <div className="svgConverter">
       <header>
         <span>
-          <img src={""} alt="/" />
+          <img src={logo} alt="/" />
           <p>
             Svg + Jsx
           </p>
@@ -648,13 +648,17 @@ export default ${componentName};`;
       <div className="container">
         <div className="inner-container">
           <div className="main">
-      <div>
+      <div className="props-header">
         <p>Props:</p>
-        <span>
+        {/* <span>
         <button onClick={() => setUseFill(!useFill)}>Color</button>
         <button onClick={() => setUseAnimate(!useAnimate)}>Animation</button>
         <button onClick={() => setUseSize(!useSize)}>Size</button>
-        </span>
+        </span> */}
+        <label className="switch" >
+           <input type={"checkbox"} onClick={() => setUseFill(!useFill)} />
+           <span className="slider"></span>
+        </label>
       </div>
       {/* <SvgCop size={40} fill="green" hoverColor="purple" hoverScale={true} /> */}
 
@@ -674,12 +678,12 @@ export default ${componentName};`;
           <p>Preview:</p>
           <AceEditor
             mode="javascript"
-            theme="tomorrow_night"
+            theme="cobalt"
             value={componentCode}
             readOnly={true}
             setOptions={{ useWorker: false }}
             editorProps={{ $blockScrolling: true }}
-            style={{ width: "100%", height: "200px" }}
+            style={{ width: "100%", height: "100%" }}
           />
         </>
       )}
