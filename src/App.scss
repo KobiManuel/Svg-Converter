@@ -47,9 +47,13 @@
         padding: 4px 0;
         font-size: 13px;
       }
+      .info-message {
+        float: right;
+        margin: 34px 28px 0 0;
+      }
       h2 {
         font-weight: 200;
-        margin-top: 2px;
+        margin-top: 12px;
         font-size: xx-large;
         display: flex;
         align-items: center;
@@ -60,7 +64,7 @@
         border-radius: 7px;
         height: 436px;
         background-color: white;
-        margin-top: 8px;
+        margin-top: 28px;
         .props-header {
           display: flex;
           flex-direction: row;
@@ -117,7 +121,7 @@
                       display: block;
                       width: 40px;
                       height: 1px;
-                      background: #191970;
+                      background: rgb(216, 235, 248);
                       left: 0;
                       top: 50%;
                       position: absolute;
@@ -127,7 +131,7 @@
                       display: block;
                       width: 40px;
                       height: 1px;
-                      background: #191970;
+                      background:rgb(216, 235, 248);
                       right: 0;
                       top: 50%;
                       position: absolute;
@@ -333,11 +337,11 @@
     overflow: visible !important;
     width: 100% !important;
   }
-  .ace_content {
-    // width: 300px !important;
-    // transform: none !important;
-    overflow: scroll !important;
-  }
+  // .ace_content {
+  //   // width: 300px !important;
+  //   // transform: none !important;
+  //   overflow: scroll !important;
+  // }
   .ace_editor {
     height: 300.17px !important;
   }

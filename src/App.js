@@ -19,13 +19,13 @@ function App() {
   const [useSize, setUseSize] = useState(true);
   const [useAnimate, setUseAnimate] = useState(true);
   const [copySuccess, setCopySuccess] = useState(false);
-  const [modal, setModal] = useState(true)
+  const [modal, setModal] = useState(true);
 
   useEffect(() => {
     if (svgCode.trim() !== "") {
       setModal(false);
     } else {
-       setModal(true)
+      setModal(true);
     }
     transformSvg();
     if (copySuccess) {
@@ -698,7 +698,7 @@ export default ${componentName};`;
             </svg>
             Convert Svg icons to React Component
           </h2>
-          <p>
+          <p className="info-message">
             <svg
               height="48"
               viewBox="0 0 48 48"
@@ -710,7 +710,7 @@ export default ${componentName};`;
             </svg>
             Props are enabled by default{" "}
           </p>
-          <p>
+          <p className="info-message">
             <svg
               height="48"
               viewBox="0 0 48 48"
@@ -745,7 +745,7 @@ export default ${componentName};`;
             <div className="row">
               <div className="text-area">
                 <textarea
-                autoFocus
+                  autoFocus
                   rows="10"
                   cols="50"
                   placeholder="Paste your svg text here"
@@ -756,37 +756,44 @@ export default ${componentName};`;
                     color: "navy",
                   }}
                 ></textarea>
-               { modal ? (<div className="upload-card">
-                  <div className="upload-card-inner">
-                    <div className="folder">
-                    <img src={folder} alt="/" />
+                {modal ? (
+                  <div className="upload-card">
+                    <div className="upload-card-inner">
+                      <div className="folder">
+                        <img src={folder} alt="/" />
+                      </div>
+                      <div
+                        onDrop={handleDragDrop}
+                        onDragOver={(event) => event.preventDefault()}
+                      >
+                        Drag and drop your svg icon file here to transform
+                      </div>
+                      <h6>OR</h6>
+
+                      <label
+                        for="browseFiles"
+                        className="upload-btn"
+                        style={{ cursor: "pointer" }}
+                      >
+                        Browse Files
+                        <input
+                          id="browseFiles"
+                          type="file"
+                          accept=".svg"
+                          onChange={handleFileUpload}
+                          style={{ display: "none" }}
+                        />
+                      </label>
                     </div>
-                    <div
-                    onDrop={handleDragDrop}
-                    onDragOver={(event) => event.preventDefault()}
-                  >
-                    Drag and drop your svg icon file here to transform
                   </div>
-                  <h6>OR</h6>
-                  
-                    <label for="browseFiles" className="upload-btn" style={{cursor:"pointer"}} >
-                      Browse Files
-                    <input
-                    id="browseFiles"
-                      type="file"
-                      accept=".svg"
-                      onChange={handleFileUpload}
-                      style={{display:"none"}}
-                    />
-                    </label>
-                
-                  </div>
-                </div>) : "" }
+                ) : (
+                  ""
+                )}
                 <div className="transform-container">
                   <label htmlFor="componentName">
                     Component Name:
                     <input
-                    className="component-name"
+                      className="component-name"
                       type="text"
                       id="componentName"
                       value={componentName}
@@ -806,29 +813,28 @@ export default ${componentName};`;
                 </div>
               </div>
               <div className="code-area">
-                  <>
-                    <span className="copy-span">
-                      Preview:{" "}
-                      <button className="copy-btn" onClick={handleCopyClick}>
-                        {copySuccess ? (
-                          <CheckCirlce fill="#318d1f" size={25} />
-                        ) : (
-                          <CopyIcon fill="#002240" size={25} />
-                        )}
-                        {copySuccess ? "Copied" : "Copy Code"}
-                      </button>
-                    </span>
-                    <AceEditor
-                      mode="javascript"
-                      theme="cobalt"
-                      value={componentCode}
-                      readOnly={true}
-                      setOptions={{ useWorker: false }}
-                      editorProps={{ $blockScrolling: true }}
-                      style={{ width: "100%", height: "100%" }}
-                    />
-                  </>
-              
+                <>
+                  <span className="copy-span">
+                    Preview:{" "}
+                    <button className="copy-btn" onClick={handleCopyClick}>
+                      {copySuccess ? (
+                        <CheckCirlce fill="#318d1f" size={25} />
+                      ) : (
+                        <CopyIcon fill="#002240" size={25} />
+                      )}
+                      {copySuccess ? "Copied" : "Copy Code"}
+                    </button>
+                  </span>
+                  <AceEditor
+                    mode="javascript"
+                    theme="cobalt"
+                    value={componentCode}
+                    readOnly={true}
+                    setOptions={{ useWorker: false }}
+                    editorProps={{ $blockScrolling: true }}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </>
               </div>
             </div>
           </div>
