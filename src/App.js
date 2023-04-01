@@ -5,6 +5,7 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-cobalt";
 import copy from "copy-to-clipboard";
 import logo from "./images/logo3.png";
+import folder from "./images/logo3.png";
 import Button from "./components/Button";
 import CheckCirlce from "./components/Check-circle";
 import CopyIcon from "./components/Copy-icon";
@@ -18,15 +19,21 @@ function App() {
   const [useSize, setUseSize] = useState(true);
   const [useAnimate, setUseAnimate] = useState(true);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [modal, setModal] = useState(true)
 
   useEffect(() => {
+    if (svgCode.trim() !== "") {
+      setModal(false);
+    } else {
+       setModal(true)
+    }
     transformSvg();
     if (copySuccess) {
       setTimeout(() => {
-        setCopySuccess(false) 
+        setCopySuccess(false);
       }, 3000);
     }
-  }, [useFill, useSize, useAnimate, copySuccess]);
+  }, [useFill, useSize, useAnimate, copySuccess, svgCode]);
 
   // function replaceFillAttribute(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
@@ -594,6 +601,25 @@ function App() {
     setCopySuccess(true);
   };
 
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setSvgCode(event.target.result);
+    };
+    reader.readAsText(file);
+  };
+
+  const handleDragDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setSvgCode(event.target.result);
+    };
+    reader.readAsText(file);
+  };
+
   const Size = useSize ? "size = 20" : "";
   const Animate = useAnimate ? "hoverScale, hoverRotate, " : "";
   const Fill = useFill ? "fill, hoverColor, " : "";
@@ -673,7 +699,7 @@ export default ${componentName};`;
             Convert Svg icons to React Component
           </h2>
           <p>
-          <svg
+            <svg
               height="48"
               viewBox="0 0 48 48"
               width="48"
@@ -682,9 +708,10 @@ export default ${componentName};`;
               <path d="M0 0h48v48h-48z" fill="none" />
               <path d="M22 34h4v-12h-4v12zm2-30c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16zm-2-22h4v-4h-4v4z" />
             </svg>
-             Props are enabled by default </p>
+            Props are enabled by default{" "}
+          </p>
           <p>
-          <svg
+            <svg
               height="48"
               viewBox="0 0 48 48"
               width="48"
@@ -693,7 +720,8 @@ export default ${componentName};`;
               <path d="M0 0h48v48h-48z" fill="none" />
               <path d="M22 34h4v-12h-4v12zm2-30c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16zm-2-22h4v-4h-4v4z" />
             </svg>
-            Made for icons only</p>
+            Made for icons only
+          </p>
           <div className="main">
             <div className="props-header">
               <p>Props:</p>
@@ -717,8 +745,10 @@ export default ${componentName};`;
             <div className="row">
               <div className="text-area">
                 <textarea
+                autoFocus
                   rows="10"
                   cols="50"
+                  placeholder="Paste your svg text here"
                   value={svgCode}
                   onChange={handleInputChange}
                   draggable="false"
@@ -726,11 +756,37 @@ export default ${componentName};`;
                     color: "navy",
                   }}
                 ></textarea>
+               { modal ? (<div className="upload-card">
+                  <div className="upload-card-inner">
+                    <div className="folder">
+                    <img src={folder} alt="/" />
+                    </div>
+                    <div
+                    onDrop={handleDragDrop}
+                    onDragOver={(event) => event.preventDefault()}
+                  >
+                    Drag and drop your svg icon file here to transform
+                  </div>
+                  <h6>OR</h6>
+                  
+                    <label for="browseFiles" className="upload-btn" style={{cursor:"pointer"}} >
+                      Browse Files
+                    <input
+                    id="browseFiles"
+                      type="file"
+                      accept=".svg"
+                      onChange={handleFileUpload}
+                      style={{display:"none"}}
+                    />
+                    </label>
+                
+                  </div>
+                </div>) : "" }
                 <div className="transform-container">
                   <label htmlFor="componentName">
                     Component Name:
                     <input
-                    autoFocus
+                    className="component-name"
                       type="text"
                       id="componentName"
                       value={componentName}
@@ -738,24 +794,30 @@ export default ${componentName};`;
                     />
                   </label>
                   <span className="error-container">
-                  <button className="button" onClick={transformSvg}>
-                    Transform SVG
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </button>
-                  {error && <pre style={{ color: "red" }}>{error}</pre>}
+                    <button className="button" onClick={transformSvg}>
+                      Transform SVG
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </button>
+                    {error && <pre style={{ color: "red" }}>{error}</pre>}
                   </span>
                 </div>
               </div>
               <div className="code-area">
-                {componentCode && (
                   <>
-                    <span className="copy-span">Preview:  <button className="copy-btn" onClick={handleCopyClick}>
-
-        {copySuccess ? (<CheckCirlce fill="#002240" size={25} />) : (<CopyIcon fill="#002240" size={25} />)  }
-      </button></span>
+                    <span className="copy-span">
+                      Preview:{" "}
+                      <button className="copy-btn" onClick={handleCopyClick}>
+                        {copySuccess ? (
+                          <CheckCirlce fill="#318d1f" size={25} />
+                        ) : (
+                          <CopyIcon fill="#002240" size={25} />
+                        )}
+                        {copySuccess ? "Copied" : "Copy Code"}
+                      </button>
+                    </span>
                     <AceEditor
                       mode="javascript"
                       theme="cobalt"
@@ -764,10 +826,9 @@ export default ${componentName};`;
                       setOptions={{ useWorker: false }}
                       editorProps={{ $blockScrolling: true }}
                       style={{ width: "100%", height: "100%" }}
-                      
                     />
                   </>
-                )}
+              
               </div>
             </div>
           </div>
