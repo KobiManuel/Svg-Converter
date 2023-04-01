@@ -3,7 +3,11 @@ import "./App.scss";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-cobalt";
-import logo from "./images/logo2.png";
+import copy from "copy-to-clipboard";
+import logo from "./images/logo3.png";
+import Button from "./components/Button";
+import CheckCirlce from "./components/Check-circle";
+import CopyIcon from "./components/Copy-icon";
 
 function App() {
   const [svgCode, setSvgCode] = useState("");
@@ -13,10 +17,16 @@ function App() {
   const [useFill, setUseFill] = useState(true);
   const [useSize, setUseSize] = useState(true);
   const [useAnimate, setUseAnimate] = useState(true);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   useEffect(() => {
     transformSvg();
-  }, [useFill, useSize, useAnimate]);
+    if (copySuccess) {
+      setTimeout(() => {
+        setCopySuccess(false) 
+      }, 3000);
+    }
+  }, [useFill, useSize, useAnimate, copySuccess]);
 
   // function replaceFillAttribute(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
@@ -579,6 +589,11 @@ function App() {
     setComponentName(event.target.value);
   };
 
+  const handleCopyClick = () => {
+    copy(componentCode);
+    setCopySuccess(true);
+  };
+
   const Size = useSize ? "size = 20" : "";
   const Animate = useAnimate ? "hoverScale, hoverRotate, " : "";
   const Fill = useFill ? "fill, hoverColor, " : "";
@@ -640,67 +655,123 @@ export default ${componentName};`;
       <header>
         <span>
           <img src={logo} alt="/" />
-          <p>
-            Svg + Jsx
-          </p>
+          <p>Svg + Jsx</p>
         </span>
       </header>
       <div className="container">
         <div className="inner-container">
+          <h2>
+            <svg
+              height="48"
+              viewBox="0 0 48 48"
+              width="48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M0 0h48v48h-48z" fill="none" />
+              <path d="M22 34h4v-12h-4v12zm2-30c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16zm-2-22h4v-4h-4v4z" />
+            </svg>
+            Convert Svg icons to React Component
+          </h2>
+          <p>
+          <svg
+              height="48"
+              viewBox="0 0 48 48"
+              width="48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M0 0h48v48h-48z" fill="none" />
+              <path d="M22 34h4v-12h-4v12zm2-30c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16zm-2-22h4v-4h-4v4z" />
+            </svg>
+             Props are enabled by default </p>
+          <p>
+          <svg
+              height="48"
+              viewBox="0 0 48 48"
+              width="48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M0 0h48v48h-48z" fill="none" />
+              <path d="M22 34h4v-12h-4v12zm2-30c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm0 36c-8.82 0-16-7.18-16-16s7.18-16 16-16 16 7.18 16 16-7.18 16-16 16zm-2-22h4v-4h-4v4z" />
+            </svg>
+            Made for icons only</p>
           <div className="main">
-      <div className="props-header">
-        <p>Props:</p>
-        {/* <span>
-        <button onClick={() => setUseFill(!useFill)}>Color</button>
-        <button onClick={() => setUseAnimate(!useAnimate)}>Animation</button>
-        <button onClick={() => setUseSize(!useSize)}>Size</button>
-        </span> */}
-        <label className="switch" >
-           <input type={"checkbox"} onClick={() => setUseFill(!useFill)} />
-           <span className="slider"></span>
-        </label>
-      </div>
-      {/* <SvgCop size={40} fill="green" hoverColor="purple" hoverScale={true} /> */}
+            <div className="props-header">
+              <p>Props:</p>
+              <label>
+                {" "}
+                Fill: <Button onClick={() => setUseFill(!useFill)} />{" "}
+              </label>
+              <label>
+                {" "}
+                Animation: <Button
+                  onClick={() => setUseAnimate(!useAnimate)}
+                />{" "}
+              </label>
+              <label>
+                {" "}
+                Size: <Button onClick={() => setUseSize(!useSize)} />{" "}
+              </label>
+            </div>
+            {/* <SvgCop size={40} fill="green" hoverColor="purple" hoverScale={true} /> */}
 
-      <div className="row">
-         <div className="text-area">
-         <textarea
-        rows="10"
-        cols="50"
-        value={svgCode}
-        onChange={handleInputChange}
-      > 
-      </textarea>
-         </div>
-        <div className="code-area">
-        {componentCode && (
-        <>
-          <p>Preview:</p>
-          <AceEditor
-            mode="javascript"
-            theme="cobalt"
-            value={componentCode}
-            readOnly={true}
-            setOptions={{ useWorker: false }}
-            editorProps={{ $blockScrolling: true }}
-            style={{ width: "100%", height: "100%" }}
-          />
-        </>
-      )}
+            <div className="row">
+              <div className="text-area">
+                <textarea
+                  rows="10"
+                  cols="50"
+                  value={svgCode}
+                  onChange={handleInputChange}
+                  draggable="false"
+                  style={{
+                    color: "navy",
+                  }}
+                ></textarea>
+                <div className="transform-container">
+                  <label htmlFor="componentName">
+                    Component Name:
+                    <input
+                    autoFocus
+                      type="text"
+                      id="componentName"
+                      value={componentName}
+                      onChange={handleNameChange}
+                    />
+                  </label>
+                  <span className="error-container">
+                  <button className="button" onClick={transformSvg}>
+                    Transform SVG
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </button>
+                  {error && <pre style={{ color: "red" }}>{error}</pre>}
+                  </span>
+                </div>
+              </div>
+              <div className="code-area">
+                {componentCode && (
+                  <>
+                    <span className="copy-span">Preview:  <button className="copy-btn" onClick={handleCopyClick}>
+
+        {copySuccess ? (<CheckCirlce fill="#002240" size={25} />) : (<CopyIcon fill="#002240" size={25} />)  }
+      </button></span>
+                    <AceEditor
+                      mode="javascript"
+                      theme="cobalt"
+                      value={componentCode}
+                      readOnly={true}
+                      setOptions={{ useWorker: false }}
+                      editorProps={{ $blockScrolling: true }}
+                      style={{ width: "100%", height: "100%" }}
+                      
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <label htmlFor="componentName">Component Name:</label>
-      <input
-        type="text"
-        id="componentName"
-        value={componentName}
-        onChange={handleNameChange}
-      />
-      <br />
-      <button onClick={transformSvg}>Transform SVG</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      </div>
-      </div>
       </div>
     </div>
   );

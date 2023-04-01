@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Button = () => {
+const Button = ({onClick}) => {
   return (
-    <div>Button</div>
+    <label className="switch" >
+           <input type={"checkbox"} onClick={onClick} />
+           <span className="slider"></span>
+        </label>
   )
 }
 
