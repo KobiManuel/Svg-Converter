@@ -9,8 +9,8 @@
   align-items: center;
   header {
     width: 100%;
-    height: 50px;
-    background: #002240;
+    height: 64px;
+    background: linear-gradient(to left, #023285 0%, #002240  65%);
     display: flex;
     span {
       display: flex;
@@ -61,6 +61,7 @@
       }
       .main {
         box-shadow: 0 1px 3px #555;
+        // box-shadow:0 1px 30px #524d4d39;
         border-radius: 7px;
         height: 436px;
         background-color: white;

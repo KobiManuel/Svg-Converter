@@ -18,12 +18,12 @@ code {
 ::-moz-selection {
   /* Code for Firefox */
   color: #000000;
-  background:rgba(216, 235, 248, 0.192);;
+  background:rgba(179, 214, 237, 0.192);
 }
 
 ::selection {
   color: #000000;
-  background:rgba(216, 235, 248, 0.192);;
+  background:rgba(179, 214, 237, 0.192);
 }
 
 ::-webkit-scrollbar {
@@ -32,6 +32,6 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #002240; ;
-  border-radius: 5px;
+  background: rgba(75, 133, 172, 0.318);
+  border-radius: 20px;
 }
