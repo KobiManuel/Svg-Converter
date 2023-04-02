@@ -14,3 +14,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: #000000;
+  background:rgba(216, 235, 248, 0.192);;
+}
+
+::selection {
+  color: #000000;
+  background:rgba(216, 235, 248, 0.192);;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #002240; ;
+  border-radius: 5px;
+}
