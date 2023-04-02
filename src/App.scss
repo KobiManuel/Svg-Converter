@@ -340,9 +340,12 @@
   // .ace_content {
   //   // width: 300px !important;
   //   // transform: none !important;
-  //   overflow: scroll !important;
+  //   // overflow: scroll !important;
   // }
   .ace_editor {
     height: 300.17px !important;
+  }
+  .ace_print-margin {
+    display: none !important;
   }
 }
