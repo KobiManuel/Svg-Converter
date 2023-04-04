@@ -2,7 +2,7 @@
 import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 
-const SvgCop = ({ fill, hoverColor,  hoverScale, hoverRotate,  onClick, size = 20 }) => {
+const SvgIcon = ({ fill, hoverColor,  hoverScale, hoverRotate,  onClick, size = 20 }) => {
   const [filled, setFilled] = useState(fill)
    const [transform, setTransform] = useState('none');
 
@@ -26,11 +26,12 @@ const SvgCop = ({ fill, hoverColor,  hoverScale, hoverRotate,  onClick, size = 2
               setTransform("none");
             }}
             onClick={onClick}
-           xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill={fill} class="bi bi-amd" viewBox="0 0 16 16">
-<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} d="m.334 0 4.358 4.359h7.15v7.15l4.358 4.358V0H.334ZM.2 9.72l4.487-4.488v6.281h6.28L6.48 16H.2V9.72Z"/>
+           width={size} height={size} viewBox="0 0 20 19" fill={fill} xmlns="http://www.w3.org/2000/svg">
+<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} fillRule="evenodd" clipRule="evenodd" d="M13.993 7.722L9.375 12.34C9.228 12.487 9.037 12.56 8.845 12.56C8.652 12.56 8.461 12.487 8.314 12.34L6.005 10.031C5.712 9.738 5.712 9.263 6.005 8.97C6.298 8.677 6.772 8.677 7.065 8.97L8.845 10.749L12.932 6.661C13.225 6.368 13.7 6.368 13.993 6.661C14.286 6.954 14.286 7.429 13.993 7.722ZM10 0C4.762 0 0.5 4.262 0.5 9.5C0.5 14.739 4.762 19 10 19C15.238 19 19.5 14.739 19.5 9.5C19.5 4.262 15.238 0 10 0Z" fill={fill}/>
 </svg>
+
 )};
-SvgCop.propTypes = {
+SvgIcon.propTypes = {
   fill: PropTypes.string.isRequired,
   hoverColor: PropTypes.string,
   hoverScale: PropTypes.bool,
@@ -39,4 +40,4 @@ SvgCop.propTypes = {
   size: PropTypes.number
 };
 
-export default SvgCop;
+export default SvgIcon;

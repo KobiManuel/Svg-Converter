@@ -808,7 +808,7 @@ export default ${componentName};`;
                       <span></span>
                       <span></span>
                     </button>
-                    {error ? (<pre style={{ color: "red" }}>{error}</pre>) : "green"}
+                    {error ? (<pre style={{ color: "red" }}>{error}</pre>) : ""}
                   </span>
                 </div>
               </div>
