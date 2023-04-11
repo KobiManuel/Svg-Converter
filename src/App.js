@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.scss";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
@@ -21,19 +21,60 @@ function App() {
   const [copySuccess, setCopySuccess] = useState(false);
   const [modal, setModal] = useState(true);
 
+  const transformSvg = useCallback(() => {
+    // Your transformSvg() code here
+    try {
+      if (svgCode.trim() === "") {
+        throw new Error("SVG code cannot be empty");
+      }
+
+      if (
+        !svgCode.trim().startsWith("<svg") ||
+        !svgCode.trim().endsWith("</svg>")
+      ) {
+        throw new Error("Invalid svg format");
+      }
+
+      const componentCode = `
+      import React${state} from 'react';
+      import PropTypes from 'prop-types';
+
+      const ${componentName} = ({ ${Fill} ${Animate} onClick, ${Size} }) => {
+        ${fillState}
+        ${animateState}
+
+        return(
+        ${replaceFillAttribute(svgCode)}
+      )};
+      ${componentName}.propTypes = {
+        ${fillPropType}
+        ${hoverColorPropType}
+        ${hoverScalePropType}
+        ${hoverRotatePropType}
+        onClick: PropTypes.func,
+        ${sizePropType}
+      };
+
+export default ${componentName};`;
+      setComponentCode(componentCode);
+    } catch (e) {
+      setError(e.message);
+    }
+  }, [useFill, useSize, useAnimate, svgCode]);
+
   useEffect(() => {
     if (svgCode.trim() !== "") {
       setModal(false);
+      transformSvg();
     } else {
       setModal(true);
     }
-    transformSvg();
     if (copySuccess) {
       setTimeout(() => {
         setCopySuccess(false);
       }, 3000);
     }
-  }, [useFill, useSize, useAnimate, copySuccess, svgCode]);
+  }, [copySuccess, svgCode, transformSvg]);
 
   // function replaceFillAttribute(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
@@ -636,46 +677,6 @@ function App() {
   const hoverRotatePropType = useAnimate ? "hoverRotate: PropTypes.bool," : "";
   const sizePropType = useSize ? "size: PropTypes.number" : "";
 
-  const transformSvg = () => {
-    try {
-      if (svgCode.trim() === "") {
-        throw new Error("SVG code cannot be empty");
-      }
-
-      if (
-        !svgCode.trim().startsWith("<svg") ||
-        !svgCode.trim().endsWith("</svg>")
-      ) {
-        throw new Error("Invalid svg format");
-      }
-
-      const componentCode = `
-      import React${state} from 'react';
-      import PropTypes from 'prop-types';
-
-      const ${componentName} = ({ ${Fill} ${Animate} onClick, ${Size} }) => {
-        ${fillState}
-        ${animateState}
-
-        return(
-        ${replaceFillAttribute(svgCode)}
-      )};
-      ${componentName}.propTypes = {
-        ${fillPropType}
-        ${hoverColorPropType}
-        ${hoverScalePropType}
-        ${hoverRotatePropType}
-        onClick: PropTypes.func,
-        ${sizePropType}
-      };
-
-export default ${componentName};`;
-      setComponentCode(componentCode);
-    } catch (e) {
-      setError(e.message);
-    }
-  };
-
   return (
     <div className="svgConverter">
       <header>
@@ -808,7 +809,7 @@ export default ${componentName};`;
                       <span></span>
                       <span></span>
                     </button>
-                    {error ? (<pre style={{ color: "red" }}>{error}</pre>) : ""}
+                    {error ? <pre style={{ color: "red" }}>{error}</pre> : ""}
                   </span>
                 </div>
               </div>
