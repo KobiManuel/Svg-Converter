@@ -35,3 +35,15 @@ code {
   background: rgba(75, 133, 172, 0.318);
   border-radius: 20px;
 }
+
+@keyframes bounce {
+  0% {
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(10px);
+  }
+  100% {
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
+}

@@ -24,6 +24,8 @@ function App() {
   const [useAnimate, setUseAnimate] = useState(true);
   const [copySuccess, setCopySuccess] = useState(false);
   const [modal, setModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const rotateExample = `
   // With fill, rotate and size props
@@ -747,10 +749,18 @@ export default ${componentName};`;
       </header>
       <div className="container">
         <div className="inner-container">
+          <span className="clickme-container" style={{display: "flex", gap: 32}}>
           <h2>
             <InfoIcon />
             Convert Svg icons to React Component
           </h2>
+          <span className="animatedBtn-container">
+          <button className={clicked ? "clicked" : ""} onClick={() => {
+            setShowModal(!showModal)
+             setClicked(true)
+           } }>click me</button>
+           </span>
+          </span>
           <p className="info-message">
           <InfoIcon />
             Props are enabled by default{" "}
@@ -808,7 +818,7 @@ export default ${componentName};`;
                       <h6>OR</h6>
 
                       <label
-                        for="browseFiles"
+                        htmlFor="browseFiles"
                         className="upload-btn"
                         style={{ cursor: "pointer" }}
                       >
@@ -877,8 +887,12 @@ export default ${componentName};`;
           </div>
         </div>
       </div>
-      <div className="helper-modal">
-        <p>How to use :</p>
+     {showModal ? (
+      <div className="helper-modal-container" onClick={() => setShowModal(false)}> 
+        <div className="helper-modal-overlay"></div>
+        <div  style={{paddingTop:100, paddingBottom:100, zIndex:1000, position: "relative"}}>
+     <div className="helper-modal">
+        <h6>How to use :</h6>
         <div className="modal-flex">
           <AceEditor
             mode="javascript"
@@ -938,7 +952,7 @@ export default ${componentName};`;
             />
           </span>
         </div>
-      </div>
+      </div></div> </div>) : ("") }
     </div>
   );
 }
