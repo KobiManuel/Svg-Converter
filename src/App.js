@@ -90,7 +90,7 @@ export default ${componentName};`;
     } catch (e) {
       setError(e.message);
     }
-  }, [useFill, useSize, useAnimate, svgCode]);
+  }, [useFill, useSize, useAnimate, svgCode, componentName]);
 
   useEffect(() => {
     if (svgCode.trim() !== "") {
@@ -104,7 +104,7 @@ export default ${componentName};`;
         setCopySuccess(false);
       }, 3000);
     }
-  }, [copySuccess, svgCode, transformSvg, componentName]);
+  }, [copySuccess, svgCode, transformSvg]);
 
   // function replaceFillAttribute(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
