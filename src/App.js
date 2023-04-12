@@ -29,12 +29,15 @@ function App() {
         throw new Error("SVG code cannot be empty");
       }
 
-      if (
-        !svgCode.trim().startsWith("<svg") ||
-        !svgCode.trim().endsWith("</svg>")
-      ) {
+      if (svgCode.indexOf("<svg") === -1 && svgCode.indexOf("</svg>") === -1) {
         throw new Error("Invalid svg format");
       }
+      // if (
+      //   !svgCode.trim().startsWith("<svg") ||
+      //   !svgCode.trim().endsWith("</svg>")
+      // ) {
+      //   throw new Error("Invalid svg format");
+      // }
 
       const componentCode = `
       import React${state} from 'react';
