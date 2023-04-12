@@ -9,7 +9,9 @@ import folder from "./images/logo3.png";
 import Button from "./components/Button";
 import CheckCirlce from "./components/Check-circle";
 import CopyIcon from "./components/Copy-icon";
-import SvgIcon from "./test";
+import FailedIcon from "./components/Icons/FailedIcon";
+import UsersIcon from "./components/Icons/UsersIcon";
+import SuccessIcon from "./components/Icons/SuccessIcon";
 
 function App() {
   const [svgCode, setSvgCode] = useState("");
@@ -21,6 +23,30 @@ function App() {
   const [useAnimate, setUseAnimate] = useState(true);
   const [copySuccess, setCopySuccess] = useState(false);
   const [modal, setModal] = useState(true);
+
+  const rotateExample = `
+  // With fill, rotate and size props
+  <SvgIcon
+  fill="green"
+  hoverColor={"#d0312d"}
+  hoverRotate={true}
+  size={40}
+/>`;
+const scaleExample = ` 
+// With fill, scale and size props
+  <SvgIcon
+  fill="green"
+  hoverColor={"#9747ff"}
+  hoverScale={true}
+  size={40}
+/>`;
+const fillExample = ` 
+// With fill and size props alone
+ <SvgIcon
+  fill="green"
+  hoverColor={"#deb82f"}
+  size={40}
+/>`;
 
   const transformSvg = useCallback(() => {
     // Your transformSvg() code here
@@ -77,7 +103,7 @@ export default ${componentName};`;
         setCopySuccess(false);
       }, 3000);
     }
-  }, [copySuccess, svgCode, transformSvg]);
+  }, [copySuccess, svgCode, transformSvg, componentName]);
 
   // function replaceFillAttribute(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
@@ -719,12 +745,6 @@ export default ${componentName};`;
         </span>
       </header>
       <div className="container">
-        <SvgIcon
-          fill="green"
-          hoverColor={"purple"}
-          hoverRotate={true}
-          size={40}
-        />
         <div className="inner-container">
           <h2>
             <svg
@@ -880,7 +900,68 @@ export default ${componentName};`;
           </div>
         </div>
       </div>
-      <div></div>
+      <div className="helper-modal">
+        <p>How to use :</p>
+        <div className="modal-flex">
+          <AceEditor
+            mode="javascript"
+            theme="cobalt"
+            value={rotateExample}
+            readOnly={true}
+            setOptions={{ useWorker: false }}
+            editorProps={{ $blockScrolling: true }}
+            style={{ width: "300px", height: "130px" }}
+          />
+          <span className="modal-span">
+            <p>Hover over me</p>
+            <FailedIcon
+              fill="green"
+              hoverColor={"#d0312d"}
+              hoverRotate={true}
+              size={40}
+            />
+          </span>
+        </div>
+        <div className="modal-flex">
+          <AceEditor
+            mode="javascript"
+            theme="cobalt"
+            value={scaleExample}
+            readOnly={true}
+            setOptions={{ useWorker: false }}
+            editorProps={{ $blockScrolling: true }}
+            style={{ width: "300px", height: "130px" }}
+          />
+          <span className="modal-span">
+            <p>Hover over me</p>
+            <UsersIcon
+              fill="green"
+              hoverColor={"#9747ff"}
+              hoverScale={true}
+              size={40}
+            />
+          </span>
+        </div>
+        <div className="modal-flex">
+          <AceEditor
+            mode="javascript"
+            theme="cobalt"
+            value={fillExample}
+            readOnly={true}
+            setOptions={{ useWorker: false }}
+            editorProps={{ $blockScrolling: true }}
+            style={{ width: "300px", height: "130px" }}
+          />
+          <span className="modal-span">
+            <p>Hover over me</p>
+            <SuccessIcon
+              fill="green"
+              hoverColor={"#deb82f"}
+              size={40}
+            />
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
