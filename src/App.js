@@ -9,6 +9,7 @@ import folder from "./images/logo3.png";
 import Button from "./components/Button";
 import CheckCirlce from "./components/Check-circle";
 import CopyIcon from "./components/Copy-icon";
+import SvgIcon from "./test";
 
 function App() {
   const [svgCode, setSvgCode] = useState("");
@@ -38,11 +39,9 @@ function App() {
       const componentCode = `
       import React${state} from 'react';
       import PropTypes from 'prop-types';
-
       const ${componentName} = ({ ${Fill} ${Animate} onClick, ${Size} }) => {
         ${fillState}
         ${animateState}
-
         return(
         ${replaceFillAttribute(svgCode)}
       )};
@@ -56,7 +55,8 @@ function App() {
       };
 
 export default ${componentName};`;
-      setComponentCode(componentCode);
+      const cleanedComponentCode = componentCode.replace(/^\s+|\s+$/gm, "");
+      setComponentCode(cleanedComponentCode);
     } catch (e) {
       setError(e.message);
     }
@@ -84,7 +84,9 @@ export default ${componentName};`;
     const hasWidthOrHeight =
       /(?<=\s)width\s*=\s*"(.*?)"|(?<=\s)height\s*=\s*"(.*?)"/g.test(svgString);
     if (useFill && useSize && useAnimate && !hasWidthOrHeight) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
@@ -143,7 +145,9 @@ export default ${componentName};`;
         `
       );
     } else if (!useFill && useSize && useAnimate && !hasWidthOrHeight) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/<path\s/g, '<path style={{pointerEvents: "none"}} ')
         .replace(/<circle\s/g, '<circle style={{pointerEvents: "none"}} ')
         .replace(/<rect\s/g, '<rect style={{pointerEvents: "none"}} ')
@@ -174,7 +178,9 @@ export default ${componentName};`;
           `
       );
     } else if (useFill && useSize && !useAnimate && !hasWidthOrHeight) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
@@ -223,7 +229,9 @@ export default ${componentName};`;
             `
       );
     } else if (!useFill && useSize && !useAnimate && !hasWidthOrHeight) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/clip-rule="/g, 'clipRule="')
         .replace(/fill-rule="/g, 'fillRule="');
 
@@ -234,7 +242,9 @@ export default ${componentName};`;
               `
       );
     } else if (useFill && useSize && useAnimate) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
@@ -293,7 +303,9 @@ export default ${componentName};`;
                 `
       );
     } else if (!useFill && useAnimate && useSize) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(/<path\s/g, '<path style={{pointerEvents: "none"}}  ')
@@ -326,7 +338,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useFill && !useAnimate && useSize) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(/clip-rule="/g, 'clipRule="')
@@ -339,7 +353,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useFill && useAnimate && !useSize) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/<path\s/g, '<path style={{pointerEvents: "none"}}  ')
         .replace(/<circle\s/g, '<circle style={{fillpointerEvents: "none"}} ')
         .replace(/<rect\s/g, '<rect style={{pointerEvents: "none"}} ')
@@ -370,7 +386,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useAnimate && useFill && useSize) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
@@ -421,7 +439,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useAnimate && !useFill && useSize) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(/clip-rule="/g, 'clipRule="')
@@ -434,7 +454,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useAnimate && useFill && !useSize) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
@@ -483,7 +505,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useSize && useFill && useAnimate) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
@@ -540,7 +564,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useSize && !useFill && useAnimate) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/<path\s/g, '<path style={{pointerEvents: "none"}} ')
         .replace(/<circle\s/g, '<circle style={{fillpointerEvents: "none"}} ')
         .replace(/<rect\s/g, '<rect style={{pointerEvents: "none"}} ')
@@ -571,7 +597,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useSize && useFill && !useAnimate) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
@@ -620,7 +648,9 @@ export default ${componentName};`;
       `
       );
     } else if (!useFill && !useSize && !useAnimate) {
-      const svgWithFill = svgString
+      const svgIndex = svgString.indexOf("<svg");
+      const svgOnly = svgString.slice(svgIndex);
+      const svgWithFill = svgOnly
         .replace(/clip-rule="/g, 'clipRule="')
         .replace(/fill-rule="/g, 'fillRule="');
       return svgWithFill;
@@ -686,6 +716,12 @@ export default ${componentName};`;
         </span>
       </header>
       <div className="container">
+        <SvgIcon
+          fill="green"
+          hoverColor={"purple"}
+          hoverRotate={true}
+          size={40}
+        />
         <div className="inner-container">
           <h2>
             <svg
@@ -841,6 +877,7 @@ export default ${componentName};`;
           </div>
         </div>
       </div>
+      <div></div>
     </div>
   );
 }
