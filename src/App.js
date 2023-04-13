@@ -75,7 +75,7 @@ const fillExample = `
         ${fillState}
         ${animateState}
         return(
-        ${replaceFillAttribute(svgCode)}
+        ${modifySvgCode(svgCode)}
       )};
       ${componentName}.propTypes = {
         ${fillPropType}
@@ -108,11 +108,11 @@ export default ${componentName};`;
     }
   }, [copySuccess, svgCode, transformSvg]);
 
-  // function replaceFillAttribute(svgString) {
+  // function modifySvgCode(svgString) {
   //   const svgWithFill = svgString.replace(/fill\s*=\s*"(.*?)"/g, 'fill={fill}');
   //   return svgWithFill.replace(/<svg/g, '<svg onMouseEnter={e => { if (hoverColor) e.target.style.fill = hoverColor; if (hoverAnimate) e.target.style.transition = "transform 5s ease-in-out"; e.target.style.transform = "rotateX(180deg)"; onMouseLeave={e => { e.target.style.fill = fill; e.target.style.transition = "none"; e.target.style.transform = "none"; }} ');
   // }
-  function replaceFillAttribute(svgString) {
+  function modifySvgCode(svgString) {
     const hasWidthOrHeight =
       /(?<=\s)width\s*=\s*"(.*?)"|(?<=\s)height\s*=\s*"(.*?)"/g.test(svgString);
     if (useFill && useSize && useAnimate && !hasWidthOrHeight) {
@@ -751,7 +751,6 @@ export default ${componentName};`;
         <div className="inner-container">
           <span className="clickme-container" style={{display: "flex", gap: 32}}>
           <h2>
-            <InfoIcon />
             Convert Svg icons to React Component
           </h2>
           <span className="animatedBtn-container">
