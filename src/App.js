@@ -887,9 +887,9 @@ export default ${componentName};`;
         </div>
       </div>
      {showModal ? (
-      <div className="helper-modal-container" onClick={() => setShowModal(false)}> 
-        <div className="helper-modal-overlay"></div>
-        <div  style={{paddingTop:100, paddingBottom:100, zIndex:1000, position: "relative"}}>
+      <div className="helper-modal-container" > 
+        <div className="helper-modal-overlay"  onClick={() => setShowModal(false)}></div>
+        <div  style={{ width:"50%", margin: "0 auto", paddingTop:70, paddingBottom:100, zIndex:1000, position: "relative"}}>
      <div className="helper-modal">
         <h6>How to use :</h6>
         <div className="modal-flex">
