@@ -35,7 +35,7 @@ function App() {
   hoverRotate={true}
   size={40}
 />`;
-const scaleExample = ` 
+  const scaleExample = ` 
 // With fill, scale and size props
   <SvgIcon
   fill="green"
@@ -43,7 +43,7 @@ const scaleExample = `
   hoverScale={true}
   size={40}
 />`;
-const fillExample = ` 
+  const fillExample = ` 
 // With fill and size props alone
  <SvgIcon
   fill="green"
@@ -622,7 +622,9 @@ export default ${componentName};`;
     : "";
   const state = useFill || useAnimate ? ",{useState}" : "";
 
-  const allClickHandlers = useFill && useAnimate ? `const handleMouseEnter = () => {
+  const allClickHandlers =
+    useFill && useAnimate
+      ? `const handleMouseEnter = () => {
     (hoverColor && setFilled(hoverColor));
     (hoverScale && setTransform("scale(1.2)"));
     (hoverRotate && setTransform("rotate(360deg)"));
@@ -631,25 +633,31 @@ export default ${componentName};`;
   const handleMouseLeave = (e) => {
     setFilled(fill);
     setTransform("none");
-  };` : "";
+  };`
+      : "";
 
-  
-  const fillClickHandlers = useFill && !useAnimate ? `const handleMouseEnter = () => {
+  const fillClickHandlers =
+    useFill && !useAnimate
+      ? `const handleMouseEnter = () => {
     (hoverColor && setFilled(hoverColor))
   };
 
   const handleMouseLeave = (e) => {
     setFilled(fill);
-  };` : "";
+  };`
+      : "";
 
-  const animateClickHandlers = !useFill && useAnimate ? `const handleMouseEnter = () => {
+  const animateClickHandlers =
+    !useFill && useAnimate
+      ? `const handleMouseEnter = () => {
     (hoverScale && setTransform("scale(1.2)"));
     (hoverRotate && setTransform("rotate(360deg)"));
   };
 
   const handleMouseLeave = () => {
     setTransform("none");
-  };` : "";
+  };`
+      : "";
 
   const fillPropType = useFill ? "fill: PropTypes.string," : "";
   const hoverColorPropType = useFill ? "hoverColor: PropTypes.string," : "";
@@ -667,23 +675,29 @@ export default ${componentName};`;
       </header>
       <div className="container">
         <div className="inner-container">
-          <span className="clickme-container" style={{display: "flex", gap: 32}}>
-          <h2>
-            Convert Svg icons to React Component
-          </h2>
-          <span className="animatedBtn-container">
-          <button className={clicked ? "clicked" : ""} onClick={() => {
-            setShowModal(!showModal)
-             setClicked(true)
-           } }>click me</button>
-           </span>
+          <span
+            className="clickme-container"
+            style={{ display: "flex", gap: 32 }}
+          >
+            <h2>Convert Svg icons to React Component</h2>
+            <span className="animatedBtn-container">
+              <button
+                className={clicked ? "clicked" : ""}
+                onClick={() => {
+                  setShowModal(!showModal);
+                  setClicked(true);
+                }}
+              >
+                click me
+              </button>
+            </span>
           </span>
           <p className="info-message">
-          <InfoIcon />
+            <InfoIcon />
             Props are enabled by default{" "}
           </p>
           <p className="info-message">
-          <InfoIcon />
+            <InfoIcon />
             Made for icons only
           </p>
           <div className="main">
@@ -804,69 +818,89 @@ export default ${componentName};`;
           </div>
         </div>
       </div>
-     {showModal ? (
-      <div className="helper-modal-container" > 
-        <div className="helper-modal-overlay"  onClick={() => setShowModal(false)}></div>
-        <div  style={{ width:"50%", margin: "0 auto", paddingTop:70, paddingBottom:100, zIndex:1000, position: "relative"}}>
-     <div className="helper-modal">
-        <h6>How to use :</h6>
-        <div className="modal-flex">
-          <AceEditor
-            mode="javascript"
-            theme="cobalt"
-            value={rotateExample}
-            readOnly={true}
-            setOptions={{ useWorker: false }}
-            editorProps={{ $blockScrolling: true }}
-            style={{ width: "300px", height: "130px" }}
-          />
-          <span className="modal-span">
-            <p>Hover over me</p>
-            <FailedIcon
-              hoverColor={"#d0312d"}
-              hoverRotate={true}
-              size={40}
-            />
-          </span>
+      {showModal ? (
+        <div className="helper-modal-container">
+          <div
+            className="helper-modal-overlay"
+            onClick={() => setShowModal(false)}
+          ></div>
+          <div
+            style={{
+              width: "50%",
+              margin: "0 auto",
+              paddingTop: 70,
+              paddingBottom: 100,
+              zIndex: 1000,
+              position: "relative",
+            }}
+          >
+            <div className="helper-modal">
+              <h6>How to use :</h6>
+              <div className="modal-flex">
+                <AceEditor
+                  mode="javascript"
+                  theme="cobalt"
+                  value={rotateExample}
+                  readOnly={true}
+                  setOptions={{ useWorker: false }}
+                  editorProps={{ $blockScrolling: true }}
+                  style={{ width: "300px", height: "130px" }}
+                />
+                <span className="modal-span">
+                  <p>Hover over me</p>
+                  <FailedIcon
+                    fill={"green"}
+                    hoverColor={"#d0312d"}
+                    hoverRotate={true}
+                    size={40}
+                  />
+                </span>
+              </div>
+              <div className="modal-flex">
+                <AceEditor
+                  mode="javascript"
+                  theme="cobalt"
+                  value={scaleExample}
+                  readOnly={true}
+                  setOptions={{ useWorker: false }}
+                  editorProps={{ $blockScrolling: true }}
+                  style={{ width: "300px", height: "130px" }}
+                />
+                <span className="modal-span">
+                  <p>Hover over me</p>
+                  <UsersIcon
+                    fill={"green"}
+                    hoverColor={"#9747ff"}
+                    hoverScale={true}
+                    size={40}
+                  />
+                </span>
+              </div>
+              <div className="modal-flex">
+                <AceEditor
+                  mode="javascript"
+                  theme="cobalt"
+                  value={fillExample}
+                  readOnly={true}
+                  setOptions={{ useWorker: false }}
+                  editorProps={{ $blockScrolling: true }}
+                  style={{ width: "300px", height: "130px" }}
+                />
+                <span className="modal-span">
+                  <p>Hover over me</p>
+                  <SuccessIcon
+                    fill={"green"}
+                    hoverColor={"#deb82f"}
+                    size={40}
+                  />
+                </span>
+              </div>
+            </div>
+          </div>{" "}
         </div>
-        <div className="modal-flex">
-          <AceEditor
-            mode="javascript"
-            theme="cobalt"
-            value={scaleExample}
-            readOnly={true}
-            setOptions={{ useWorker: false }}
-            editorProps={{ $blockScrolling: true }}
-            style={{ width: "300px", height: "130px" }}
-          />
-          <span className="modal-span">
-            <p>Hover over me</p>
-            <UsersIcon
-              hoverColor={"#9747ff"}
-              hoverScale={true}
-              size={40}
-            />
-          </span>
-        </div>
-        <div className="modal-flex">
-          <AceEditor
-            mode="javascript"
-            theme="cobalt"
-            value={fillExample}
-            readOnly={true}
-            setOptions={{ useWorker: false }}
-            editorProps={{ $blockScrolling: true }}
-            style={{ width: "300px", height: "130px" }}
-          />
-          <span className="modal-span">
-            <p>Hover over me</p>
-            <SuccessIcon
-              hoverColor={"#deb82f"}
-              size={40}
-            />
-          </span>
-        </div>
-      </div></div> </div>) : ("") }
+      ) : (
+        ""
+      )}
     </div>
   );
 }
