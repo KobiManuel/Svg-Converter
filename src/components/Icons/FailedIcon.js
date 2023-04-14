@@ -4,9 +4,9 @@ const FailedIcon = ({ fill, hoverColor,  hoverScale, hoverRotate,  onClick, size
 const [filled, setFilled] = useState(fill)
 const [transform, setTransform] = useState('none')
 const handleMouseEnter = () => {
-{hoverColor && setFilled(hoverColor)};
-{hoverScale && setTransform("scale(1.2)")};
-{hoverRotate && setTransform("rotate(360deg)")};
+(hoverColor && setFilled(hoverColor));
+(hoverScale && setTransform("scale(1.2)"));
+(hoverRotate && setTransform("rotate(360deg)"));
 };const handleMouseLeave = (e) => {
 setFilled(fill);
 setTransform("none");

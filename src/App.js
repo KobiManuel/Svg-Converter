@@ -630,9 +630,9 @@ export default ${componentName};`;
   const state = useFill || useAnimate ? ",{useState}" : "";
 
   const allClickHandlers = useFill && useAnimate ? `const handleMouseEnter = () => {
-    {hoverColor && setFilled(hoverColor)};
-    {hoverScale && setTransform("scale(1.2)")};
-    {hoverRotate && setTransform("rotate(360deg)")};
+    (hoverColor && setFilled(hoverColor));
+    (hoverScale && setTransform("scale(1.2)"));
+    (hoverRotate && setTransform("rotate(360deg)"));
   };
 
   const handleMouseLeave = (e) => {
@@ -642,7 +642,7 @@ export default ${componentName};`;
 
   
   const fillClickHandlers = useFill && !useAnimate ? `const handleMouseEnter = () => {
-    {hoverColor && setFilled(hoverColor)}
+    (hoverColor && setFilled(hoverColor))
   };
 
   const handleMouseLeave = (e) => {
@@ -650,8 +650,8 @@ export default ${componentName};`;
   };` : "";
 
   const animateClickHandlers = !useFill && useAnimate ? `const handleMouseEnter = () => {
-    {hoverScale && setTransform("scale(1.2)")};
-    {hoverRotate && setTransform("rotate(360deg)")};
+    (hoverScale && setTransform("scale(1.2)"));
+    (hoverRotate && setTransform("rotate(360deg)"));
   };
 
   const handleMouseLeave = () => {
