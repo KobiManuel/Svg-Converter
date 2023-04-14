@@ -121,7 +121,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(
@@ -191,7 +190,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
           '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
@@ -249,7 +247,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(
@@ -359,7 +356,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
         .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(
@@ -421,7 +417,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
           '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
@@ -466,7 +461,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
           '<path style={{transition: "fill 0.4s ", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
@@ -534,7 +528,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/fill\s*=\s*"(.*?)"/g, "fill={fill}")
         .replace(
           /<path\s/g,
           '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
