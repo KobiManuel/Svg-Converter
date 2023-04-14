@@ -52,7 +52,6 @@ const fillExample = `
 />`;
 
   const transformSvg = useCallback(() => {
-    // Your transformSvg() code here
     try {
       if (svgCode.trim() === "") {
         throw new Error("SVG code cannot be empty");
@@ -74,6 +73,9 @@ const fillExample = `
       const ${componentName} = ({ ${Fill} ${Animate} onClick, ${Size} }) => {
         ${fillState}
         ${animateState}
+        ${allClickHandlers}
+        ${fillClickHandlers}
+        ${animateClickHandlers}
         return(
         ${modifySvgCode(svgCode)}
       )};
@@ -157,22 +159,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
           style={{ width: size, transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
-          onMouseEnter={e => {
-            if (hoverColor) {
-              setFilled(hoverColor);
-            }
-            if (hoverScale) {
-              setTransform("scale(1.2)");
-            }
-            if (hoverRotate) {
-              setTransform("rotate(360deg)");
-            }
-          }}
-          onMouseLeave={e => {
-            setFilled(fill);
-            setTransform("scale(1)");
-            setTransform("none");
-          }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           onClick={onClick}
         `
       );
@@ -194,18 +182,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
             style={{ width: size, transition: "transform 1s", transform: transform, cursor: "pointer" }}
-            onMouseEnter={e => {
-              if (hoverScale) {
-                setTransform("scale(1.2)");
-              }
-              if (hoverRotate) {
-                setTransform("rotate(360deg)");
-              }
-            }}
-            onMouseLeave={e => {
-              setTransform("scale(1)");
-              setTransform("none");
-            }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             onClick={onClick}
           `
       );
@@ -249,14 +227,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
               style={{ width: size, transition: "fill 0.4s ", fill: filled }}
-              onMouseEnter={e => {
-                if (hoverColor) {
-                  setFilled(hoverColor);
-                }
-              }}
-              onMouseLeave={e => {
-                setFilled(fill);
-              }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
               onClick={onClick}
             `
       );
@@ -314,25 +286,11 @@ export default ${componentName};`;
       return svgWithFill.replace(
         /<svg/g,
         `<svg
-                  style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
-                  onMouseEnter={e => {
-                    if (hoverColor) {
-                      setFilled(hoverColor);
-                    }
-                    if (hoverScale) {
-                      setTransform("scale(1.2)");
-                    }
-                    if (hoverRotate) {
-                      setTransform("rotate(360deg)");
-                    }
-                  }}
-                  onMouseLeave={e => {
-                    setFilled(fill);
-                    setTransform("scale(1)");
-                    setTransform("none");
-                  }}
-                  onClick={onClick}
-                `
+            style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={onClick}
+            `
       );
     } else if (!useFill && useAnimate && useSize) {
       const svgIndex = svgString.indexOf("<svg");
@@ -354,18 +312,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
         style={{ transition: "transform 1s", transform: transform, cursor: "pointer" }}
-        onMouseEnter={e => {
-          if (hoverScale) {
-            setTransform("scale(1.2)");
-          }
-          if (hoverRotate) {
-            setTransform("rotate(360deg)");
-          }
-        }}
-        onMouseLeave={e => {
-          setTransform("scale(1)");
-          setTransform("none");
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={onClick}
       `
       );
@@ -402,18 +350,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
         style={{ transition: "transform 1s", transform: transform, cursor: "pointer" }}
-        onMouseEnter={e => {
-          if (hoverScale) {
-            setTransform("scale(1.2)");
-          }
-          if (hoverRotate) {
-            setTransform("rotate(360deg)");
-          }
-        }}
-        onMouseLeave={e => {
-          setTransform("scale(1)");
-          setTransform("none");
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={onClick}
       `
       );
@@ -459,14 +397,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
         style={{ transition: "fill 0.4s", fill: filled }}
-        onMouseEnter={e => {
-          if (hoverColor) {
-            setFilled(hoverColor);
-          }
-        }}
-        onMouseLeave={e => {
-          setFilled(fill);
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={onClick}
       `
       );
@@ -525,14 +457,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
         style={{ transition: "fill 0.4s", fill: filled }}
-        onMouseEnter={e => {
-          if (hoverColor) {
-            setFilled(hoverColor);
-          }
-        }}
-        onMouseLeave={e => {
-          setFilled(fill);
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={onClick}
       `
       );
@@ -576,22 +502,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
         style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
-        onMouseEnter={e => {
-          if (hoverColor) {
-            setFilled(hoverColor);
-          }
-          if (hoverScale) {
-            setTransform("scale(1.2)");
-          }
-          if (hoverRotate) {
-            setTransform("rotate(360deg)");
-          }
-        }}
-        onMouseLeave={e => {
-          setFilled(fill);
-          setTransform("scale(1)");
-          setTransform("none");
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={onClick}
       `
       );
@@ -613,18 +525,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
         style={{ transition: "transform 1s", transform: transform, cursor: "pointer" }}
-        onMouseEnter={e => {
-          if (hoverScale) {
-            setTransform("scale(1.2)");
-          }
-          if (hoverRotate) {
-            setTransform("rotate(360deg)");
-          }
-        }}
-        onMouseLeave={e => {
-          setTransform("scale(1)");
-          setTransform("none");
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={onClick}
       `
       );
@@ -668,14 +570,8 @@ export default ${componentName};`;
         /<svg/g,
         `<svg
         style={{ transition: "fill 0.4s", fill: filled }}
-        onMouseEnter={e => {
-          if (hoverColor) {
-            setFilled(hoverColor);
-          }
-        }}
-        onMouseLeave={e => {
-          setFilled(fill);
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={onClick}
       `
       );
@@ -729,9 +625,38 @@ export default ${componentName};`;
 
   const fillState = useFill ? "const [filled, setFilled] = useState(fill)" : "";
   const animateState = useAnimate
-    ? " const [transform, setTransform] = useState('none');"
+    ? " const [transform, setTransform] = useState('none')"
     : "";
   const state = useFill || useAnimate ? ",{useState}" : "";
+
+  const allClickHandlers = useFill && useAnimate ? `const handleMouseEnter = () => {
+    {hoverColor && setFilled(hoverColor)};
+    {hoverScale && setTransform("scale(1.2)")};
+    {hoverRotate && setTransform("rotate(360deg)")};
+  };
+
+  const handleMouseLeave = (e) => {
+    setFilled(fill);
+    setTransform("none");
+  };` : "";
+
+  
+  const fillClickHandlers = useFill && !useAnimate ? `const handleMouseEnter = () => {
+    {hoverColor && setFilled(hoverColor)}
+  };
+
+  const handleMouseLeave = (e) => {
+    setFilled(fill);
+  };` : "";
+
+  const animateClickHandlers = !useFill && useAnimate ? `const handleMouseEnter = () => {
+    {hoverScale && setTransform("scale(1.2)")};
+    {hoverRotate && setTransform("rotate(360deg)")};
+  };
+
+  const handleMouseLeave = () => {
+    setTransform("none");
+  };` : "";
 
   const fillPropType = useFill ? "fill: PropTypes.string.isRequired," : "";
   const hoverColorPropType = useFill ? "hoverColor: PropTypes.string," : "";
