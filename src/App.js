@@ -651,7 +651,7 @@ export default ${componentName};`;
     setTransform("none");
   };` : "";
 
-  const fillPropType = useFill ? "fill: PropTypes.string.isRequired," : "";
+  const fillPropType = useFill ? "fill: PropTypes.string," : "";
   const hoverColorPropType = useFill ? "hoverColor: PropTypes.string," : "";
   const hoverScalePropType = useAnimate ? "hoverScale: PropTypes.bool," : "";
   const hoverRotatePropType = useAnimate ? "hoverRotate: PropTypes.bool," : "";
@@ -823,7 +823,6 @@ export default ${componentName};`;
           <span className="modal-span">
             <p>Hover over me</p>
             <FailedIcon
-              fill="green"
               hoverColor={"#d0312d"}
               hoverRotate={true}
               size={40}
@@ -843,7 +842,6 @@ export default ${componentName};`;
           <span className="modal-span">
             <p>Hover over me</p>
             <UsersIcon
-              fill="green"
               hoverColor={"#9747ff"}
               hoverScale={true}
               size={40}
@@ -863,7 +861,6 @@ export default ${componentName};`;
           <span className="modal-span">
             <p>Hover over me</p>
             <SuccessIcon
-              fill="green"
               hoverColor={"#deb82f"}
               size={40}
             />
