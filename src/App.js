@@ -163,7 +163,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        
         .replace(/<path\s/g, '<path style={{pointerEvents: "none"}}  ')
         .replace(/<circle\s/g, '<circle style={{fillpointerEvents: "none"}} ')
         .replace(/<rect\s/g, '<rect style={{pointerEvents: "none"}} ')

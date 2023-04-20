@@ -23,7 +23,7 @@ code {
 
 ::selection {
   color: #000000;
-  background:rgba(179, 214, 237, 0.192);
+  background:rgba(179, 214, 237, 0.346);
 }
 
 ::-webkit-scrollbar {
