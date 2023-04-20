@@ -115,78 +115,7 @@ export default ${componentName};`;
   //   return svgWithFill.replace(/<svg/g, '<svg onMouseEnter={e => { if (hoverColor) e.target.style.fill = hoverColor; if (hoverAnimate) e.target.style.transition = "transform 5s ease-in-out"; e.target.style.transform = "rotateX(180deg)"; onMouseLeave={e => { e.target.style.fill = fill; e.target.style.transition = "none"; e.target.style.transform = "none"; }} ');
   // }
   function modifySvgCode(svgString) {
-    const hasWidthOrHeight =
-      /(?<=\s)width\s*=\s*"(.*?)"|(?<=\s)height\s*=\s*"(.*?)"/g.test(svgString);
-    if (useFill && useSize && useAnimate && !hasWidthOrHeight) {
-      const svgIndex = svgString.indexOf("<svg");
-      const svgOnly = svgString.slice(svgIndex);
-      const svgWithFill = svgOnly
-        .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
-        .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
-        .replace(
-          /<path\s/g,
-          '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<circle\s/g,
-          '<circle style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<rect\s/g,
-          '<rect style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<line\s/g,
-          '<line style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<polyline\s/g,
-          '<polyline style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<polygon\s/g,
-          '<polygon style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<ellipse\s/g,
-          '<ellipse style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(/clip-rule="/g, 'clipRule="')
-        .replace(/fill-rule="/g, 'fillRule="');
-
-      return svgWithFill.replace(
-        /<svg/g,
-        `<svg
-          style={{ width: size, transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={onClick}
-        `
-      );
-    } else if (!useFill && useSize && useAnimate && !hasWidthOrHeight) {
-      const svgIndex = svgString.indexOf("<svg");
-      const svgOnly = svgString.slice(svgIndex);
-      const svgWithFill = svgOnly
-        .replace(/<path\s/g, '<path style={{pointerEvents: "none"}} ')
-        .replace(/<circle\s/g, '<circle style={{pointerEvents: "none"}} ')
-        .replace(/<rect\s/g, '<rect style={{pointerEvents: "none"}} ')
-        .replace(/<line\s/g, '<line style={{pointerEvents: "none"}} ')
-        .replace(/<polyline\s/g, '<polyline style={{pointerEvents: "none"}} ')
-        .replace(/<polygon\s/g, '<polygon style={{pointerEvents: "none"}} ')
-        .replace(/<ellipse\s/g, '<ellipse style={{pointerEvents: "none"}} ')
-        .replace(/clip-rule="/g, 'clipRule="')
-        .replace(/fill-rule="/g, 'fillRule="');
-
-      return svgWithFill.replace(
-        /<svg/g,
-        `<svg
-            style={{ width: size, transition: "transform 1s", transform: transform, cursor: "pointer" }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onClick={onClick}
-          `
-      );
-    } else if (useFill && useSize && !useAnimate && !hasWidthOrHeight) {
+    if (useFill && useSize && useAnimate) {
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
@@ -224,66 +153,7 @@ export default ${componentName};`;
       return svgWithFill.replace(
         /<svg/g,
         `<svg
-              style={{ width: size, transition: "fill 0.4s ", fill: filled }}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onClick={onClick}
-            `
-      );
-    } else if (!useFill && useSize && !useAnimate && !hasWidthOrHeight) {
-      const svgIndex = svgString.indexOf("<svg");
-      const svgOnly = svgString.slice(svgIndex);
-      const svgWithFill = svgOnly
-        .replace(/clip-rule="/g, 'clipRule="')
-        .replace(/fill-rule="/g, 'fillRule="');
-
-      return svgWithFill.replace(
-        /<svg/g,
-        `<svg
-                style={{ width: size }}
-              `
-      );
-    } else if (useFill && useSize && useAnimate) {
-      const svgIndex = svgString.indexOf("<svg");
-      const svgOnly = svgString.slice(svgIndex);
-      const svgWithFill = svgOnly
-        .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
-        .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
-        .replace(
-          /<path\s/g,
-          '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<circle\s/g,
-          '<circle style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<rect\s/g,
-          '<rect style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<line\s/g,
-          '<line style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<polyline\s/g,
-          '<polyline style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<polygon\s/g,
-          '<polygon style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(
-          /<ellipse\s/g,
-          '<ellipse style={{transition: "stroke 0.4s", stroke: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
-        )
-        .replace(/clip-rule="/g, 'clipRule="')
-        .replace(/fill-rule="/g, 'fillRule="');
-
-      return svgWithFill.replace(
-        /<svg/g,
-        `<svg
-            style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer" }}
+            style={{ transition: "transform 1s, fill 0.4s ", fill: filled, transform: transform, cursor: "pointer", width: size, height: size }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
@@ -293,8 +163,7 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
-        .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
+        
         .replace(/<path\s/g, '<path style={{pointerEvents: "none"}}  ')
         .replace(/<circle\s/g, '<circle style={{fillpointerEvents: "none"}} ')
         .replace(/<rect\s/g, '<rect style={{pointerEvents: "none"}} ')
@@ -308,7 +177,7 @@ export default ${componentName};`;
       return svgWithFill.replace(
         /<svg/g,
         `<svg
-        style={{ transition: "transform 1s", transform: transform, cursor: "pointer" }}
+        style={{ transition: "transform 1s", transform: transform, cursor: "pointer", width: size, height: size }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={onClick}
@@ -318,14 +187,13 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
-        .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(/clip-rule="/g, 'clipRule="')
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
         /<svg/g,
         `<svg
+        style={{width: size, height: size}}
         onClick={onClick}
       `
       );
@@ -356,8 +224,6 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
-        .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
         .replace(
           /<path\s/g,
           '<path style={{transition: "fill 0.4s", fill: filled, pointerEvents: "none"}} onMouseEnter={e => {if (hoverColor) setFilled(hoverColor);}} onMouseLeave={e => {setFilled(fill);}} '
@@ -392,7 +258,7 @@ export default ${componentName};`;
       return svgWithFill.replace(
         /<svg/g,
         `<svg
-        style={{ transition: "fill 0.4s", fill: filled }}
+        style={{ transition: "fill 0.4s", fill: filled, width: size, height: size }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={onClick}
@@ -402,14 +268,14 @@ export default ${componentName};`;
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
       const svgWithFill = svgOnly
-        .replace(/(?<=\s)width\s*=\s*"(.*?)"/g, "width={size}")
-        .replace(/(?<=\s)height\s*=\s*"(.*?)"/g, "height={size}")
+        
         .replace(/clip-rule="/g, 'clipRule="')
         .replace(/fill-rule="/g, 'fillRule="');
 
       return svgWithFill.replace(
         /<svg/g,
         `<svg
+        style={{width: size, height: size}}
         onClick={onClick}
       `
       );
