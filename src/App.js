@@ -115,6 +115,12 @@ export default ${componentName};`;
   //   return svgWithFill.replace(/<svg/g, '<svg onMouseEnter={e => { if (hoverColor) e.target.style.fill = hoverColor; if (hoverAnimate) e.target.style.transition = "transform 5s ease-in-out"; e.target.style.transform = "rotateX(180deg)"; onMouseLeave={e => { e.target.style.fill = fill; e.target.style.transition = "none"; e.target.style.transform = "none"; }} ');
   // }
   function modifySvgCode(svgString) {
+    svgString = svgString.replace(/:\w/g, function(match) {
+      return match.charAt(1).toUpperCase();
+    });
+    svgString = svgString.replace(/-\w/g, function(change) {
+      return change.charAt(1).toUpperCase();
+    });
     if (useFill && useSize && useAnimate) {
       const svgIndex = svgString.indexOf("<svg");
       const svgOnly = svgString.slice(svgIndex);
