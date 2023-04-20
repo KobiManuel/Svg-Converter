@@ -32,7 +32,7 @@ function App() {
   <SvgIcon
   fill="green"
   hoverColor={"#d0312d"}
-  hoverRotate={true}
+  hoverRotate
   size={40}
 />`;
   const scaleExample = ` 
@@ -40,7 +40,7 @@ function App() {
   <SvgIcon
   fill="green"
   hoverColor={"#9747ff"}
-  hoverScale={true}
+  hoverScale
   size={40}
 />`;
   const fillExample = ` 
@@ -722,7 +722,7 @@ export default ${componentName};`;
                   <FailedIcon
                     fill={"green"}
                     hoverColor={"#d0312d"}
-                    hoverRotate={true}
+                    hoverRotate
                     size={40}
                   />
                 </span>
@@ -742,7 +742,7 @@ export default ${componentName};`;
                   <UsersIcon
                     fill={"green"}
                     hoverColor={"#9747ff"}
-                    hoverScale={true}
+                    hoverScale
                     size={40}
                   />
                 </span>
