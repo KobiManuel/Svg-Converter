@@ -13,6 +13,7 @@ import FailedIcon from "./components/Icons/FailedIcon";
 import UsersIcon from "./components/Icons/UsersIcon";
 import SuccessIcon from "./components/Icons/SuccessIcon";
 import InfoIcon from "./components/Icons/InfoIcon";
+import ErrorPrompt from "./components/ErrorPrompt/ErrorPrompt";
 
 function App() {
   const [svgCode, setSvgCode] = useState("");
@@ -26,6 +27,9 @@ function App() {
   const [modal, setModal] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [clicked, setClicked] = useState(false);
+
+  const phoneScreenWidth = 936;
+  const isPhoneScreen = window.innerWidth < phoneScreenWidth;
 
   const rotateExample = `
   // With fill, rotate and size props
@@ -544,7 +548,8 @@ export default ${componentName};`;
           <p>Svg + Jsx</p>
         </span>
       </header>
-      <div className="container">
+      {isPhoneScreen ? (<ErrorPrompt />) : 
+      (<div className="container">
         <div className="inner-container">
           <span
             className="clickme-container"
@@ -688,7 +693,7 @@ export default ${componentName};`;
             </div>
           </div>
         </div>
-      </div>
+      </div> )}
       {showModal ? (
         <div className="helper-modal-container">
           <div

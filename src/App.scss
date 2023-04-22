@@ -445,3 +445,21 @@
   }
   
 }
+.error {
+  font-weight: 400;
+  margin-top: 12px;
+  font-size: xx-large;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px;
+}
+.error2 {
+  font-weight: 300;
+  margin-top: 12px;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px;
+}
